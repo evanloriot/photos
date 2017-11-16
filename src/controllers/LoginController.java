@@ -2,6 +2,9 @@ package controllers;
 
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.TextField;
 import javafx.scene.control.Alert.AlertType;
@@ -28,12 +31,33 @@ public class LoginController {
 				    alert.showAndWait();
 				}
 				else if(username.getText().equals("admin")) {
-					 //admin functionality
+					try {
+						FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/admin.fxml"));
+						Parent root = (Parent) loader.load();
+						
+						AdminController adminController = loader.getController();
+						adminController.start(mainStage);
+						
+						Scene scene = new Scene(root);
+						mainStage.setScene(scene);
+					}
+					catch(Exception e) {
+						System.out.println("error");
+						e.printStackTrace();
+					}
+				}
+				else if(userExists(username.getText())){
+					//user functionality
 				}
 				else {
-					//user functionality
+					
 				}
 			}
 		});
+	}
+	
+	public boolean userExists(String user) {
+		//check to see if user exists;
+		return true;
 	}
 }
