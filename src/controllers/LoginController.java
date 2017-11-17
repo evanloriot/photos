@@ -1,5 +1,7 @@
 package controllers;
 
+import java.util.ArrayList;
+
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -12,6 +14,8 @@ import javafx.scene.control.Button;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
+import models.Album;
+import models.User;
 
 public class LoginController {
 	@FXML
@@ -47,7 +51,22 @@ public class LoginController {
 					}
 				}
 				else if(userExists(username.getText())){
-					//user functionality
+					User user = getUser(username.getText());
+					try {
+						FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/albums.fxml"));
+						Parent root = (Parent) loader.load();
+						
+						AlbumsController albumsController = loader.getController();
+						albumsController.user = user;
+						albumsController.start(mainStage);
+						
+						Scene scene = new Scene(root);
+						mainStage.setScene(scene);
+					}
+					catch(Exception e) {
+						System.out.println("error");
+						e.printStackTrace();
+					}
 				}
 				else {
 					Alert alert = new Alert(AlertType.ERROR);
@@ -85,7 +104,22 @@ public class LoginController {
 					}
 				}
 				else if(userExists(username.getText())){
-					//user functionality
+					User user = getUser(username.getText());
+					try {
+						FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/albums.fxml"));
+						Parent root = (Parent) loader.load();
+						
+						AlbumsController albumsController = loader.getController();
+						albumsController.user = user;
+						albumsController.start(mainStage);
+						
+						Scene scene = new Scene(root);
+						mainStage.setScene(scene);
+					}
+					catch(Exception e) {
+						System.out.println("error");
+						e.printStackTrace();
+					}
 				}
 				else {
 					Alert alert = new Alert(AlertType.ERROR);
@@ -101,5 +135,11 @@ public class LoginController {
 	public boolean userExists(String user) {
 		//check to see if user exists;
 		return true;
+	}
+	
+	public User getUser(String username) {
+		//grab user from object
+		User user = new User("Evan");
+		return user;
 	}
 }
