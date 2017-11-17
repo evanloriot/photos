@@ -3,27 +3,19 @@ package controllers;
 import java.util.ArrayList;
 import java.util.Optional;
 
-import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.geometry.Insets;
-import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
-import javafx.scene.control.ButtonBar.ButtonData;
 import javafx.scene.control.ButtonType;
-import javafx.scene.control.Dialog;
-import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
-import javafx.scene.control.TextField;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
 import models.User;
 import utilities.Utilities;
@@ -67,7 +59,7 @@ public class AdminController {
 		
 		add.setOnMouseClicked(new EventHandler<MouseEvent>() {
 			public void handle(MouseEvent click) {
-				Optional<String> result = Utilities.showDialog("Add", "Add User", "Please add a username to add to users list.", "Username", "Username:");
+				Optional<String> result = Utilities.showDialog("Add", "Add User", "Please enter username to add to users list.", "Username", "Username:");
 						
 				result.ifPresent(userName -> {
 					if(doesUserExist(userName)) {
@@ -135,6 +127,7 @@ public class AdminController {
 		for(int i = 0; i < obsList.size(); i++) {
 			if(username.equals(obsList.get(i).toString())) {
 				obsList.remove(i);
+				//delete from db
 				return;
 			}
 		}
