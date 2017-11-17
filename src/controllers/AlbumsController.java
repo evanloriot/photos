@@ -12,6 +12,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
+import javafx.scene.control.Label;
 import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
 import javafx.scene.control.Alert.AlertType;
@@ -24,6 +25,8 @@ import models.User;
 import utilities.Utilities;
 
 public class AlbumsController {
+	@FXML
+	Label title;
 	@FXML
 	Button logout;
 	@FXML
@@ -44,12 +47,40 @@ public class AlbumsController {
 	User user;
 	
 	public void start(Stage mainStage) {
+		title.setText(title.getText() + user.username);
+		
 		albums = FXCollections.observableArrayList(user.albums);
 		albumsListView.setItems(albums);
 		albumsListView.setCellFactory(new Callback<ListView<Album>, ListCell<Album>>(){
 			@Override
 			public ListCell<Album> call(ListView<Album> listView){
 				return new AlbumListViewCell();
+			}
+		});
+		albumsListView.refresh();
+		
+		albumsListView.setOnMouseClicked(new EventHandler<MouseEvent>() {
+			@Override
+			public void handle(MouseEvent click){
+				Album album = albumsListView.getSelectionModel().getSelectedItem();
+				if(click.getClickCount() == 2) {
+					try {
+						FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/album.fxml"));
+						Parent root = (Parent) loader.load();
+						
+						AlbumController albumController = loader.getController();
+						albumController.user = user;
+						albumController.album = album;
+						albumController.start(mainStage);
+						
+						Scene scene = new Scene(root);
+						mainStage.setScene(scene);
+					}
+					catch(Exception e) {
+						System.out.println("error");
+						e.printStackTrace();
+					}
+				}
 			}
 		});
 		

@@ -3,7 +3,7 @@ package models;
 import java.util.ArrayList;
 
 public class User {
-	private String username;
+	public String username;
 	public ArrayList<Album> albums;
 	
 	public User(String username) {
@@ -23,6 +23,7 @@ public class User {
 		for(int i = 0; i < albums.size(); i++) {
 			if(name.equals(albums.get(i).name)) {
 				albums.get(i).name = newName;
+				albums.get(i).location.replace(name, newName);
 			}
 		}
 	}
@@ -34,5 +35,14 @@ public class User {
 				return;
 			}
 		}
+	}
+	
+	public Album getAlbum(String name) {
+		for(int i = 0; i < albums.size(); i++) {
+			if(name.equals(albums.get(i).name)) {
+				return albums.get(i);
+			}
+		}
+		return null;
 	}
 }

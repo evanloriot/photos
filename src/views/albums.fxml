@@ -25,7 +25,7 @@
   </rowConstraints>
    <children>
       <Pane prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: #DCDCDC;" GridPane.columnSpan="3" />
-      <Label text="Photos: albums">
+      <Label fx:id="title" text="Albums: " GridPane.columnSpan="2">
          <font>
             <Font size="25.0" />
          </font>

@@ -1,7 +1,5 @@
 package controllers;
 
-import java.util.ArrayList;
-
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -14,7 +12,6 @@ import javafx.scene.control.Button;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
-import models.Album;
 import models.User;
 
 public class LoginController {
@@ -138,7 +135,7 @@ public class LoginController {
 	}
 	
 	public User getUser(String username) {
-		//grab user from object
+		//grab user from object. this needs to build albums objects and photos objects
 		User user = new User("Evan");
 		return user;
 	}

@@ -1,5 +1,6 @@
 package models;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.Date;
 
@@ -13,8 +14,8 @@ public class Photo {
 		this.location = location;
 		caption = "";
 		tags = new ArrayList<String>();
-		//get date from photo on file
-		captureDate = new Date();
+		File file = new File(location);
+		captureDate = new Date(file.lastModified());
 	}
 	
 	public void addTag(String tag) {

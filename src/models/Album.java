@@ -60,4 +60,19 @@ public class Album {
 		}
 		return new Image(photos.get(0).location);
 	}
+	
+	public void addPhoto(String location) {
+		photos.add(new Photo(location));
+		numPhotos++;
+	}
+	
+	public void deletePhoto(String location) {
+		for(int i = 0; i < photos.size(); i++) {
+			if(location.equals(photos.get(i).location)) {
+				photos.remove(i);
+				numPhotos--;
+				return;
+			}
+		}
+	}
 }
