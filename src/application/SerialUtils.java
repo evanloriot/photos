@@ -2,6 +2,7 @@ package application;
 
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
@@ -10,6 +11,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
+import models.Album;
 import models.User;
 
 public class SerialUtils implements Serializable{
@@ -17,18 +19,6 @@ public class SerialUtils implements Serializable{
 	public static final String storeDir =  new File("").getAbsolutePath() +"\\src\\models\\dat";
 	public static final String fileEnd = ".dat";
 	public static final String usersFile = "userList.dat";
-	
-//	public static void main(String[] args){
-//		User u = new User("admin");
-//		ArrayList<User> users = new ArrayList<>();
-//		try {
-//			writeUserToFile(u);
-//			users.add(u);
-//			writeUserList(users);
-//		} catch (Exception e){
-//			e.printStackTrace();
-//		}
-//	}
 	
 	public static boolean nameTaken(List<User> userList, String newUser){
 		for(User u : userList){
@@ -39,6 +29,7 @@ public class SerialUtils implements Serializable{
 		
 		return false;
 	}
+	
 	public static void writeUserToFile(User user) throws IOException{
 		ObjectOutputStream oos = new ObjectOutputStream(
 				new FileOutputStream(storeDir + File.separator + user.toString() + fileEnd));
@@ -59,28 +50,24 @@ public class SerialUtils implements Serializable{
 		return f.delete();
 	}
 	
-	public static void writeUserList(List<User> users){
-		try{
-			ObjectOutputStream oos = new ObjectOutputStream(
-					new FileOutputStream(storeDir + File.separator + usersFile));
-			oos.writeObject(users);
-			oos.close();
-		} catch(Exception e) {
-			System.out.println("Error occured serializing the user list");
+	public static ArrayList<User> getUserList() throws IOException{
+		File dir = new File(storeDir);
+		File[] directoryListing = dir.listFiles();
+		ArrayList<User> users = new ArrayList<>();
+		User user;
+		if(directoryListing != null){
+			for(File f : directoryListing){
+				try{
+					ObjectInputStream ois = new ObjectInputStream(new FileInputStream(f.getAbsolutePath()));
+					user = (User)ois.readObject();
+					users.add(user);
+					ois.close();
+				} catch(Exception e){
+					e.printStackTrace();
+				}
+			}
 		}
-	}
-	
-	public static ArrayList<User> getUserList(){
-		try{
-			ObjectInputStream ois = new ObjectInputStream(new FileInputStream(storeDir + File.separator + usersFile));
-			ArrayList<User> users = (ArrayList<User>)ois.readObject();
-			ois.close();
-			return users;
-		} catch(Exception e) {
-			System.out.println("Error occured getting the user list");
-			e.printStackTrace();
-			return null;
-		}
+		return users;
 	}
 	
 	public static User getUser(ArrayList<User> userList, String userName){

@@ -3,6 +3,7 @@ package controllers;
 import java.io.File;
 import java.util.Optional;
 
+import application.SerialUtils;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.EventHandler;
@@ -140,23 +141,22 @@ public class AlbumController {
 		playSlideshow.setOnMouseClicked(new EventHandler<MouseEvent>() {
 			@Override
 			public void handle(MouseEvent click){
-				if(album.numPhotos > 0) {
-					try {
-						FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/slideshow.fxml"));
-						Parent root = (Parent) loader.load();
-						
-						SlideshowController slideshowController = loader.getController();
-						slideshowController.user = user;
-						slideshowController.album = album;
-						slideshowController.start(mainStage);
-						
-						Scene scene = new Scene(root);
-						mainStage.setScene(scene);
-					}
-					catch(Exception e) {
-						System.out.println("error");
-						e.printStackTrace();
-					}
+				if(album.numPhotos > 0)
+				try {
+					FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/slideshow.fxml"));
+					Parent root = (Parent) loader.load();
+
+					SlideshowController slideshowController = loader.getController();
+					slideshowController.user = user;
+					slideshowController.album = album;
+					slideshowController.start(mainStage);
+					
+					Scene scene = new Scene(root);
+					mainStage.setScene(scene);
+				}
+				catch(Exception e) {
+					System.out.println("error");
+					e.printStackTrace();
 				}
 			}
 		});
@@ -354,16 +354,26 @@ public class AlbumController {
 			return;
 		}
 		//may cause problem????
-		Photo photo = new Photo(location);
-		album.addPhoto(location);
-		photos.add(photo);
+		try{
+			Photo photo = new Photo(location);
+			album.addPhoto(location);
+			photos.add(photo);
+			SerialUtils.writeUserToFile(user);
+		} catch(Exception e){
+			e.printStackTrace();
+		}
 	}
 	
 	public void deletePhoto(String location) {
 		album.deletePhoto(location);
 		for(int i = 0; i < photos.size(); i++) {
 			if(location.equals(photos.get(i).location)) {
+			try{				
 				photos.remove(i);
+				SerialUtils.writeUserToFile(user);
+			} catch(Exception e){
+				e.printStackTrace();
+			}
 				return;
 			}
 		}
