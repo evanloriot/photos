@@ -1,5 +1,6 @@
 package controllers;
 
+import java.io.IOException;
 import java.util.ArrayList;
 
 import application.SerialUtils;
@@ -26,11 +27,14 @@ public class LoginController {
 	ArrayList<User> userList;
 	
 	public void start(Stage mainStage) {
-		userList = SerialUtils.getUserList();
+		try {
+			userList = SerialUtils.getUserList();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 		login.setOnMouseClicked(new EventHandler<MouseEvent>() {
 			@Override
 			public void handle(MouseEvent click){
-				userList = SerialUtils.getUserList();
 				if(username.getLength() == 0) {
 					Alert alert = new Alert(AlertType.ERROR);
 					alert.initOwner(mainStage);

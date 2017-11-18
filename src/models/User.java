@@ -47,4 +47,8 @@ public class User implements Serializable{
 		}
 		return null;
 	}
+	
+	public ArrayList<Album> getAlbums() {
+		return this.albums;
+	}
 }

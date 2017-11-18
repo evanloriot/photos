@@ -119,7 +119,6 @@ public class AdminController {
 				iterator.remove();
 				userList.remove(u);
 				SerialUtils.deleteUserFromFile(userName);
-				SerialUtils.writeUserList(userList);
 			}
 		}
 	}
@@ -130,7 +129,6 @@ public class AdminController {
 			SerialUtils.writeUserToFile(u);
 			obsList.add(u);
 			userList.add(u);
-			SerialUtils.writeUserList(userList);
 		} catch (Exception e){
 			System.out.println("Error occured adding a user");
 			e.printStackTrace();

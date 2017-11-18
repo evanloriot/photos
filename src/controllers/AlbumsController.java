@@ -2,6 +2,7 @@ package controllers;
 
 import java.util.Optional;
 
+import application.SerialUtils;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.EventHandler;
@@ -215,17 +216,30 @@ public class AlbumsController {
 	}
 	
 	public void addAlbum(String name) {
-		Album album = new Album(name);
-		user.addAlbum(album);
-		albums.add(album);
-		albumsListView.refresh();
+		try{
+			Album album = new Album(name);
+			user.addAlbum(album);
+			albums.add(album);
+			albumsListView.refresh();
+			SerialUtils.writeUserToFile(user);	
+		} catch(Exception e){
+			System.out.println("Error adding new album");
+			e.printStackTrace();
+		}
+		
 	}
 	
 	public void renameAlbum(String name, String newName) {
 		user.renameAlbum(name, newName);
 		for(int i = 0; i < albums.size(); i++) {
 			if(name.equals(albums.get(i).name)) {
-				albums.get(i).name = newName;
+				try{
+					albums.get(i).name = newName;
+					SerialUtils.writeUserToFile(user);			
+				} catch(Exception e){
+					System.out.println("Error adding new album");
+					e.printStackTrace();
+				}
 			}
 		}
 		albumsListView.refresh();
@@ -235,7 +249,13 @@ public class AlbumsController {
 		user.deleteAlbum(name);
 		for(int i = 0; i < albums.size(); i++) {
 			if(name.equals(albums.get(i).name)) {
-				albums.remove(i);
+				try{
+					albums.remove(i);
+					SerialUtils.writeUserToFile(user);			
+				} catch(Exception e){
+					System.out.println("Error adding new album");
+					e.printStackTrace();
+				}
 				return;
 			}
 		}
