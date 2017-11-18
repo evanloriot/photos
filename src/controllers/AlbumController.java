@@ -140,12 +140,23 @@ public class AlbumController {
 		playSlideshow.setOnMouseClicked(new EventHandler<MouseEvent>() {
 			@Override
 			public void handle(MouseEvent click){
-				try {
-					//route playSlideshow
-				}
-				catch(Exception e) {
-					System.out.println("error");
-					e.printStackTrace();
+				if(album.numPhotos > 0) {
+					try {
+						FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/slideshow.fxml"));
+						Parent root = (Parent) loader.load();
+						
+						SlideshowController slideshowController = loader.getController();
+						slideshowController.user = user;
+						slideshowController.album = album;
+						slideshowController.start(mainStage);
+						
+						Scene scene = new Scene(root);
+						mainStage.setScene(scene);
+					}
+					catch(Exception e) {
+						System.out.println("error");
+						e.printStackTrace();
+					}
 				}
 			}
 		});
