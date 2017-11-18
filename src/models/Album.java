@@ -1,12 +1,14 @@
 package models;
 
+import java.io.Serializable;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 
 import javafx.scene.image.Image;
 
-public class Album {
+public class Album implements Serializable{
+	private static final long serialVersionUID = 1L;
 	public String name;
 	public int numPhotos;
 	public String location;

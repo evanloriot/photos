@@ -1,10 +1,12 @@
 package models;
 
 import java.io.File;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
 
-public class Photo {
+public class Photo implements Serializable{
+	private static final long serialVersionUID = 1L;
 	public String caption;
 	public Date captureDate;
 	public ArrayList<String> tags;
