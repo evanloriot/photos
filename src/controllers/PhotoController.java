@@ -100,7 +100,7 @@ public class PhotoController {
 			public void handle(MouseEvent click){
 				try {
 					if(isTagFormatted(tag.getText())){
-						photoObj.tags.add(tag.getText());
+						user.getAlbum(album.name).getPhoto(photoObj.location).tags.add(tag.getText());
 						obsTags.add(tag.getText());
 						tag.setText("");
 					}
@@ -116,7 +116,7 @@ public class PhotoController {
 			if(event.getCode() == KeyCode.ENTER && !tag.getText().isEmpty()) {
 				try {
 					if(isTagFormatted(tag.getText())){
-						photoObj.tags.add(tag.getText());
+						user.getAlbum(album.name).getPhoto(photoObj.location).tags.add(tag.getText());
 						obsTags.add(tag.getText());
 						tag.setText("");
 					}

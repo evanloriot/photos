@@ -110,7 +110,15 @@ public class AlbumsController {
 			@Override
 			public void handle(MouseEvent click){
 				try {
-					//do search redirect
+					FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/searchByTag.fxml"));
+					Parent root = (Parent) loader.load();
+					
+					SearchByTagController searchByTagController = loader.getController();
+					searchByTagController.user = user;
+					searchByTagController.start(mainStage);
+					
+					Scene scene = new Scene(root);
+					mainStage.setScene(scene);
 				}
 				catch(Exception e) {
 					System.out.println("error");

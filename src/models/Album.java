@@ -72,4 +72,13 @@ public class Album implements Serializable{
 			}
 		}
 	}
+	
+	public Photo getPhoto(String location) {
+		for(int i = 0; i < photos.size(); i++) {
+			if(location.equals(photos.get(i).location)) {
+				return photos.get(i);
+			}
+		}
+		return null;
+	}
 }
