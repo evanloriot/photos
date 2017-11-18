@@ -11,16 +11,11 @@ public class Album implements Serializable{
 	private static final long serialVersionUID = 1L;
 	public String name;
 	public int numPhotos;
-	public String location;
 	public ArrayList<Photo> photos;
 	
 	public Album(String name) {
 		this.name = name;
 		numPhotos = 0;
-		
-		//need to create save location
-		location = "/data/albums/" + name;
-		
 		photos = new ArrayList<Photo>();
 	}
 	

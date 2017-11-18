@@ -3,7 +3,6 @@ package controllers;
 import java.io.File;
 import java.util.Optional;
 
-import application.SerialUtils;
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
