@@ -3,6 +3,7 @@ package controllers;
 import java.io.File;
 import java.util.Optional;
 
+import application.SerialUtils;
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -319,16 +320,26 @@ public class AlbumController {
 			return;
 		}
 		//may cause problem????
-		Photo photo = new Photo(location);
-		album.addPhoto(location);
-		photos.add(photo);
+		try{
+			Photo photo = new Photo(location);
+			album.addPhoto(location);
+			photos.add(photo);
+			SerialUtils.writeUserToFile(user);
+		} catch(Exception e){
+			e.printStackTrace();
+		}
 	}
 	
 	public void deletePhoto(String location) {
 		album.deletePhoto(location);
 		for(int i = 0; i < photos.size(); i++) {
 			if(location.equals(photos.get(i).location)) {
+			try{				
 				photos.remove(i);
+				SerialUtils.writeUserToFile(user);
+			} catch(Exception e){
+				e.printStackTrace();
+			}
 				return;
 			}
 		}
