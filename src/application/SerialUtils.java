@@ -29,6 +29,7 @@ public class SerialUtils implements Serializable{
 		
 		return false;
 	}
+	
 	public static void writeUserToFile(User user) throws IOException{
 		ObjectOutputStream oos = new ObjectOutputStream(
 				new FileOutputStream(storeDir + File.separator + user.toString() + fileEnd));
