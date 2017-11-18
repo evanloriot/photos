@@ -20,32 +20,6 @@ public class SerialUtils implements Serializable{
 	public static final String fileEnd = ".dat";
 	public static final String usersFile = "userList.dat";
 	
-//	public static void main(String[] args){
-//		User u = new User("admin");
-//		User u2 = new User("Joe");
-//		try{
-//		User joe = readUserFromFile("Joe");
-//		joe.getAlbums();
-//		} catch (Exception e){
-//			e.printStackTrace();
-//		}
-//
-//		u2.addAlbum(new Album("yeaaarrrr"));
-//		u2.getAlbums().get(0).location = "1231231";
-//		ArrayList<User> users = new ArrayList<>();
-//		try {
-//			writeUserToFile(u);
-//			writeUserToFile(u2);
-//			users.add(u);
-//			users.add(u2);
-//			users = getUserList();
-//			users.add(readUserFromFile("Joe"));
-//			
-//		} catch (Exception e){
-//			e.printStackTrace();
-//		}
-//	}
-	
 	public static boolean nameTaken(List<User> userList, String newUser){
 		for(User u : userList){
 			if(u.toString().equals(newUser)){
@@ -74,37 +48,6 @@ public class SerialUtils implements Serializable{
 		File f = new File(storeDir + File.separator + userName + fileEnd);
 		return f.delete();
 	}
-	
-//	public static void writeUserList(ArrayList<User> users){
-//		try{
-//			ObjectOutputStream oos = new ObjectOutputStream(
-//					new FileOutputStream(storeDir + File.separator + usersFile));
-//			oos.writeObject(users);
-//			oos.close();
-//		} catch(Exception e) {
-//			System.out.println("Error occured serializing the user list");
-//		}
-//	}
-	
-	// This one had a werid bug....
-//	public static ArrayList<User> getUserList() throws IOException{
-//		try{
-//			ObjectInputStream ois = new ObjectInputStream(new FileInputStream(storeDir + File.separator + usersFile));
-//			ArrayList<User> users = (ArrayList<User>)ois.readObject();
-//			ois.close();
-//			return users;
-//		} catch (FileNotFoundException e){
-//			ArrayList<User> users = new ArrayList<>();
-//			User u = new User("admin");
-//			writeUserToFile(u);
-//			users.add(u);
-//			return users;
-//		} catch(Exception e) {
-//			System.out.println("Error occurred getting the user list");
-//			e.printStackTrace();
-//			return null;
-//		}
-//	}
 	
 	public static ArrayList<User> getUserList() throws IOException{
 		File dir = new File(storeDir);
