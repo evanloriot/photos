@@ -1,5 +1,8 @@
 package controllers;
 
+import java.util.ArrayList;
+
+import application.SerialUtils;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -20,10 +23,14 @@ public class LoginController {
 	@FXML
 	TextField username;
 	
+	ArrayList<User> userList;
+	
 	public void start(Stage mainStage) {
+		userList = SerialUtils.getUserList();
 		login.setOnMouseClicked(new EventHandler<MouseEvent>() {
 			@Override
 			public void handle(MouseEvent click){
+				userList = SerialUtils.getUserList();
 				if(username.getLength() == 0) {
 					Alert alert = new Alert(AlertType.ERROR);
 					alert.initOwner(mainStage);
@@ -37,7 +44,7 @@ public class LoginController {
 						Parent root = (Parent) loader.load();
 						
 						AdminController adminController = loader.getController();
-						adminController.start(mainStage);
+						adminController.start(mainStage, userList);
 						
 						Scene scene = new Scene(root);
 						mainStage.setScene(scene);
@@ -90,7 +97,7 @@ public class LoginController {
 						Parent root = (Parent) loader.load();
 						
 						AdminController adminController = loader.getController();
-						adminController.start(mainStage);
+						adminController.start(mainStage, userList);
 						
 						Scene scene = new Scene(root);
 						mainStage.setScene(scene);
@@ -129,14 +136,22 @@ public class LoginController {
 		});
 	}
 	
-	public boolean userExists(String user) {
-		//check to see if user exists;
-		return true;
+	public boolean userExists(String userName) {
+		for(User u : userList){
+			if(u.toString().equals(userName)){
+				return true;
+			}
+		}	
+		return false;
 	}
 	
-	public User getUser(String username) {
-		//grab user from object. this needs to build albums objects and photos objects
-		User user = new User("Evan");
-		return user;
+	public User getUser(String userName) {
+		for(User u : userList){
+			if(u.toString().equals(userName)){
+				return u;
+			}
+		}
+		
+		return null;
 	}
 }

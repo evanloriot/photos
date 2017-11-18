@@ -1,8 +1,10 @@
 package controllers;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.Optional;
 
+import application.SerialUtils;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.EventHandler;
@@ -32,9 +34,11 @@ public class AdminController {
 	
 	ObservableList<User> obsList;
 	
-	public void start(Stage mainStage) {
-		obsList = FXCollections.observableArrayList(getUsers());
+	public void start(Stage mainStage, ArrayList<User> userList) {
+		obsList = FXCollections.observableArrayList(userList);
 		
+		User admin = SerialUtils.getUser(userList, "admin");
+		obsList.remove(admin);
 		users.setItems(obsList);
 		
 		logout.setOnMouseClicked(new EventHandler<MouseEvent>() {
@@ -70,7 +74,7 @@ public class AdminController {
 					    alert.showAndWait();
 					}
 					else {
-						addUser(userName);
+						addUser(userName, userList);
 					}
 				});
 			}
@@ -85,7 +89,7 @@ public class AdminController {
 					alert.setHeaderText("Are you sure you want to delete user \"" + user.toString() + "\"?");
 					Optional<ButtonType> result = alert.showAndWait();
 					if(result.get() == ButtonType.OK) {
-						deleteUser(user.toString());
+						deleteUser(user.toString(), userList);
 					}
 				}
 				else {
@@ -99,43 +103,38 @@ public class AdminController {
 		});
 	}
 	
-	public boolean doesUserExist(String username) {
+	public boolean doesUserExist(String userName) {
 		for(int i = 0 ; i < obsList.size(); i++) {
-			if(username.equals(obsList.get(i).toString())) {
+			if(userName.equals(obsList.get(i).toString())) {
 				return true;
 			}
 		}
 		return false;
 	}
 	
-	public ArrayList<User> getUsers(){
-		//implement get users from db
-		
-		//temp
-		ArrayList<User> users = new ArrayList<User>();
-		users.add(new User("evan"));
-		users.add(new User("temp1"));
-		users.add(new User("temp2"));
-		users.add(new User("temp3"));
-		users.add(new User("temp4"));
-		return users;
-	}
-	
-	public void deleteUser(String username) {
-		//implement delete user from db
-		
-		for(int i = 0; i < obsList.size(); i++) {
-			if(username.equals(obsList.get(i).toString())) {
-				obsList.remove(i);
-				//delete from db
-				return;
+	public void deleteUser(String userName, ArrayList<User> userList) {
+		for(Iterator<User> iterator = obsList.iterator() ; iterator.hasNext() ; ){
+			User u = iterator.next();
+			if(u.toString().equals(userName)){
+				iterator.remove();
+				userList.remove(u);
+				SerialUtils.deleteUserFromFile(userName);
+				SerialUtils.writeUserList(userList);
 			}
 		}
 	}
 	
-	public void addUser(String username) {
-		//implement add user to db
-		
-		obsList.add(new User(username));
+	public void addUser(String userName, ArrayList<User> userList) {
+		User u = new User(userName);
+		try {
+			SerialUtils.writeUserToFile(u);
+			obsList.add(u);
+			userList.add(u);
+			SerialUtils.writeUserList(userList);
+		} catch (Exception e){
+			System.out.println("Error occured adding a user");
+			e.printStackTrace();
+		}
+
 	}
 }
