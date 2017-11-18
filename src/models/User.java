@@ -25,7 +25,6 @@ public class User implements Serializable{
 		for(int i = 0; i < albums.size(); i++) {
 			if(name.equals(albums.get(i).name)) {
 				albums.get(i).name = newName;
-				albums.get(i).location.replace(name, newName);
 			}
 		}
 	}
