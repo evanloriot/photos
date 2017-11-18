@@ -190,20 +190,25 @@ public class PhotoController {
 						albumController.user = user;
 						albumController.album = album;
 						albumController.start(mainStage);
-						
-						//need to remove
-						Scene scene = new Scene(root);
-						mainStage.setScene(scene);
 					}
 					else if(backLocation.equals("searchByDate")) {
-						//back to date
+						FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/searchByDate.fxml"));
+						root = (Parent) loader.load();
+						
+						SearchByDateController searchByDateController = loader.getController();
+						searchByDateController.user = user;
+						searchByDateController.start(mainStage);
 					}
 					else {
-						//back to tags
+						FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/searchByTag.fxml"));
+						root = (Parent) loader.load();
+						
+						SearchByTagController searchByTagController = loader.getController();
+						searchByTagController.user = user;
+						searchByTagController.start(mainStage);
 					}
-					
-//					Scene scene = new Scene(root);
-//					mainStage.setScene(scene);
+					Scene scene = new Scene(root);
+					mainStage.setScene(scene);
 				}
 				catch(Exception e) {
 					System.out.println("error");

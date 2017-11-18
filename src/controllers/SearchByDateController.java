@@ -1,6 +1,10 @@
 package controllers;
 
+import java.time.Instant;
+import java.time.LocalDate;
+import java.time.ZoneId;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.Optional;
 
 import javafx.collections.FXCollections;
@@ -12,11 +16,10 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.DatePicker;
 import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
-import javafx.scene.control.TextField;
 import javafx.scene.control.Alert.AlertType;
-import javafx.scene.input.KeyCode;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 import javafx.util.Callback;
@@ -26,17 +29,17 @@ import models.PhotoListViewCell;
 import models.User;
 import utilities.Utilities;
 
-public class SearchByTagController {
+public class SearchByDateController {
 	@FXML
 	Button logout;
 	@FXML
 	Button back;
 	@FXML
-	TextField parameters;
+	DatePicker startDate;
+	@FXML
+	DatePicker endDate;
 	@FXML
 	Button search;
-	@FXML
-	Button help;
 	@FXML 
 	ListView<Photo> photosListView;
 	@FXML
@@ -47,12 +50,6 @@ public class SearchByTagController {
 	User user;
 	
 	public void start(Stage mainStage) {
-		search.setDisable(true);
-		
-		parameters.textProperty().addListener((observable, oldValue, newValue) -> {
-			search.setDisable(newValue.trim().isEmpty());
-		});
-		
 		photosListView.setOnMouseClicked(new EventHandler<MouseEvent>() {
 			@Override
 			public void handle(MouseEvent click){
@@ -66,7 +63,7 @@ public class SearchByTagController {
 						photoController.user = user;
 						photoController.album = photo.album;
 						photoController.photoObj = photo;
-						photoController.backLocation = "searchByTag";
+						photoController.backLocation = "searchByDate";
 						photoController.start(mainStage);
 						
 						Scene scene = new Scene(root);
@@ -116,8 +113,15 @@ public class SearchByTagController {
 			@Override
 			public void handle(MouseEvent click){
 				try {
-					if(areParametersValid(parameters.getText())) {
-						photos = FXCollections.observableArrayList(getPhotosFromSearch(parameters.getText()));
+					LocalDate s = startDate.getValue();
+					LocalDate e = endDate.getValue();
+					Instant st = Instant.from(s.atStartOfDay(ZoneId.systemDefault()));
+					Instant en = Instant.from(e.atStartOfDay(ZoneId.systemDefault()));
+					Date start = Date.from(st);
+					Date end = Date.from(en);
+					
+					if(start != null && end != null) {
+						photos = FXCollections.observableArrayList(getPhotosFromSearch(start, end));
 						photosListView.setItems(photos);
 						photosListView.setCellFactory(new Callback<ListView<Photo>, ListCell<Photo>>(){
 							@Override
@@ -126,44 +130,6 @@ public class SearchByTagController {
 							}
 						});
 					}
-				}
-				catch(Exception e) {
-					System.out.println("error");
-					e.printStackTrace();
-				}
-			}
-		});
-		
-		parameters.setOnKeyPressed((event) -> {
-			if(event.getCode() == KeyCode.ENTER && !parameters.getText().isEmpty()) {
-				try {
-					if(areParametersValid(parameters.getText())) {
-						photos = FXCollections.observableArrayList(getPhotosFromSearch(parameters.getText()));
-						photosListView.setItems(photos);
-						photosListView.setCellFactory(new Callback<ListView<Photo>, ListCell<Photo>>(){
-							@Override
-							public ListCell<Photo> call(ListView<Photo> listView){
-								return new PhotoListViewCell();
-							}
-						});
-					}
-				}
-				catch(Exception e) {
-					System.out.println("error");
-					e.printStackTrace();
-				}
-			}
-		});
-		
-		help.setOnMouseClicked(new EventHandler<MouseEvent>() {
-			@Override
-			public void handle(MouseEvent click){
-				try {
-					Alert alert = new Alert(AlertType.INFORMATION);
-					alert.initOwner(mainStage);
-				    alert.setTitle("Herlp");
-				    alert.setHeaderText("Correct format of tags is as follows: \ntag=value,tag=value,tag=value");
-				    alert.showAndWait();
 				}
 				catch(Exception e) {
 					System.out.println("error");
@@ -218,14 +184,12 @@ public class SearchByTagController {
 		return tags.matches("([a-zA-Z0-9]*[=][a-zA-Z0-9]*[,]?)*");
 	}
 	
-	public ArrayList<Photo> getPhotosFromSearch(String search){
+	public ArrayList<Photo> getPhotosFromSearch(Date start, Date end){
 		ArrayList<Photo> output = new ArrayList<Photo>();
 		for(int i = 0; i < user.albums.size(); i++) {
 			for(int j = 0; j < user.albums.get(i).photos.size(); j++) {
-				for(int k = 0; k < user.albums.get(i).photos.get(j).tags.size(); k++) {
-					if(search.contains(user.albums.get(i).photos.get(j).tags.get(k))) {
-						output.add(user.albums.get(i).photos.get(j));
-					}
+				if(!start.after(user.albums.get(i).photos.get(j).captureDate) && !end.before(user.albums.get(i).photos.get(j).captureDate)) {
+					output.add(user.albums.get(i).photos.get(j));
 				}
 			}
 		}
