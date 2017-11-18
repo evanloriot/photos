@@ -3,7 +3,6 @@ package controllers;
 import java.io.File;
 import java.util.Optional;
 
-import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.EventHandler;
@@ -20,9 +19,7 @@ import javafx.scene.control.Dialog;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
-import javafx.scene.control.TextField;
 import javafx.scene.control.Alert.AlertType;
-import javafx.scene.image.Image;
 import javafx.scene.control.ButtonBar.ButtonData;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
@@ -72,6 +69,33 @@ public class AlbumController {
 			}
 		});
 		
+		photosListView.setOnMouseClicked(new EventHandler<MouseEvent>() {
+			@Override
+			public void handle(MouseEvent click){
+				Photo photo = photosListView.getSelectionModel().getSelectedItem();
+				if(click.getClickCount() == 2) {
+					try {
+						FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/photo.fxml"));
+						Parent root = (Parent) loader.load();
+						
+						PhotoController photoController = loader.getController();
+						photoController.user = user;
+						photoController.album = album;
+						photoController.photoObj = photo;
+						photoController.backLocation = "album";
+						photoController.start(mainStage);
+						
+						Scene scene = new Scene(root);
+						mainStage.setScene(scene);
+					}
+					catch(Exception e) {
+						System.out.println("error");
+						e.printStackTrace();
+					}
+				}
+			}
+		});
+		
 		back.setOnMouseClicked(new EventHandler<MouseEvent>() {
 			@Override
 			public void handle(MouseEvent click){
@@ -116,12 +140,23 @@ public class AlbumController {
 		playSlideshow.setOnMouseClicked(new EventHandler<MouseEvent>() {
 			@Override
 			public void handle(MouseEvent click){
-				try {
-					//route playSlideshow
-				}
-				catch(Exception e) {
-					System.out.println("error");
-					e.printStackTrace();
+				if(album.numPhotos > 0) {
+					try {
+						FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/slideshow.fxml"));
+						Parent root = (Parent) loader.load();
+						
+						SlideshowController slideshowController = loader.getController();
+						slideshowController.user = user;
+						slideshowController.album = album;
+						slideshowController.start(mainStage);
+						
+						Scene scene = new Scene(root);
+						mainStage.setScene(scene);
+					}
+					catch(Exception e) {
+						System.out.println("error");
+						e.printStackTrace();
+					}
 				}
 			}
 		});
