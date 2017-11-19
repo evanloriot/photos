@@ -60,7 +60,7 @@
             <Font size="17.0" />
          </font>
       </Button>
-      <ListView fx:id="photosListView" prefHeight="200.0" prefWidth="200.0" GridPane.columnSpan="4" GridPane.rowIndex="2" />
+      <ListView fx:id="photosListView" prefHeight="200.0" prefWidth="200.0" stylesheets="@styles.css" GridPane.columnSpan="4" GridPane.rowIndex="2" />
       <Button fx:id="playSlideshow" minHeight="50.0" mnemonicParsing="false" prefWidth="600.0" text="Play Slideshow" GridPane.columnSpan="3" GridPane.halignment="LEFT" GridPane.rowIndex="1" GridPane.valignment="CENTER">
          <font>
             <Font size="18.0" />

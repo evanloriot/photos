@@ -47,7 +47,7 @@ public class Photo implements Serializable{
 		this.location = location;
 		caption = "";
 		tags = new ArrayList<String>();
-		File file = new File(getAbsolutePath());
+		File file = new File(location.isEmpty() ? "" : getAbsolutePath());
 		captureDate = new Date(file.lastModified());
 	}
 	

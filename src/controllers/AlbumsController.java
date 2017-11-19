@@ -269,6 +269,9 @@ public class AlbumsController {
 		try{
 			Album album = new Album(name);
 			user.addAlbum(album);
+			if(albums.size() == 0) {
+				albums.add(new ArrayList<Album>());
+			}
 			albums.get(albums.size() - 1).add(album);
 			resizeAlbums();
 			albumsListView.refresh();
