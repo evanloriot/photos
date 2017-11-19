@@ -85,8 +85,15 @@ public class PhotoController {
 				try {
 					Optional<String> result = Utilities.showDialog("Save","Edit Caption","Enter a new caption.","Caption","Caption:");
 					result.ifPresent(captionText -> {
-						photoObj.caption = captionText;
+						user.getAlbum(album.name).getPhoto(photoObj.location).caption = captionText;
 						caption.setText(captionText);
+						try {
+							SerialUtils.writeUserToFile(user);
+						}
+						catch(Exception e){
+							e.printStackTrace();
+						}
+						
 					});
 				}
 				catch(Exception e) {

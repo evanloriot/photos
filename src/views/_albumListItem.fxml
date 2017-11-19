@@ -16,7 +16,7 @@
     <RowConstraints maxHeight="220.0" minHeight="10.0" prefHeight="76.0" vgrow="SOMETIMES" />
   </rowConstraints>
    <children>
-      <ImageView fx:id="thumb" fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true" GridPane.halignment="CENTER" GridPane.valignment="CENTER" />
+      <ImageView fx:id="thumb" fitHeight="374.0" fitWidth="665.0" pickOnBounds="true" preserveRatio="true" GridPane.halignment="CENTER" GridPane.valignment="CENTER" />
       <Text fx:id="data" strokeType="OUTSIDE" strokeWidth="0.0" text="Album Data" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER">
          <font>
             <Font size="18.0" />
