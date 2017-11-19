@@ -11,6 +11,7 @@ public class Photo implements Serializable{
 	public Date captureDate;
 	public ArrayList<String> tags;
 	public String location;
+	public Album album;
 	
 	public Photo(String location) {
 		this.location = location;

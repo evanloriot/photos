@@ -350,12 +350,11 @@ public class AlbumController {
 
 	public void addPhoto(String location) {
 		if(location.isEmpty()) {
-			//may need alert
 			return;
 		}
-		//may cause problem????
 		try{
 			Photo photo = new Photo(location);
+			photo.album = album;
 			album.addPhoto(location);
 			photos.add(photo);
 			SerialUtils.writeUserToFile(user);

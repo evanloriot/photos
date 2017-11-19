@@ -131,7 +131,15 @@ public class AlbumsController {
 			@Override
 			public void handle(MouseEvent click){
 				try {
-					//do search redirect
+					FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/searchByDate.fxml"));
+					Parent root = (Parent) loader.load();
+					
+					SearchByDateController searchByDateController = loader.getController();
+					searchByDateController.user = user;
+					searchByDateController.start(mainStage);
+					
+					Scene scene = new Scene(root);
+					mainStage.setScene(scene);
 				}
 				catch(Exception e) {
 					System.out.println("error");
