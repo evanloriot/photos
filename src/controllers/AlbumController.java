@@ -3,7 +3,6 @@ package controllers;
 import java.io.File;
 import java.util.Optional;
 
-import application.SerialUtils;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.EventHandler;
@@ -31,6 +30,7 @@ import javafx.util.Callback;
 import models.Album;
 import models.Photo;
 import models.PhotoListViewCell;
+import models.SerialUtils;
 import models.User;
 
 public class AlbumController {

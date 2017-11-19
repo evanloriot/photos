@@ -3,7 +3,6 @@ package controllers;
 import java.io.IOException;
 import java.util.ArrayList;
 
-import application.SerialUtils;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -16,6 +15,7 @@ import javafx.scene.control.Button;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
+import models.SerialUtils;
 import models.User;
 
 /**

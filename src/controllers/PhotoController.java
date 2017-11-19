@@ -3,7 +3,6 @@ package controllers;
 import java.text.SimpleDateFormat;
 import java.util.Optional;
 
-import application.SerialUtils;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.EventHandler;
@@ -26,6 +25,7 @@ import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import models.Album;
 import models.Photo;
+import models.SerialUtils;
 import models.User;
 import utilities.Utilities;
 

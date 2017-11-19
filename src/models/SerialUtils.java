@@ -1,4 +1,4 @@
-package application;
+package models;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -10,9 +10,6 @@ import java.io.ObjectOutputStream;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
-
-import models.Album;
-import models.User;
 
 /**
  * A class used to manage serializing/storing all of the users' data. 

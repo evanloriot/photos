@@ -3,7 +3,6 @@ package controllers;
 import java.util.ArrayList;
 import java.util.Optional;
 
-import application.SerialUtils;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.EventHandler;
@@ -24,6 +23,7 @@ import javafx.util.Callback;
 import models.Album;
 import models.Photo;
 import models.PhotoListViewCell;
+import models.SerialUtils;
 import models.User;
 import utilities.Utilities;
 
