@@ -3,7 +3,6 @@ package controllers;
 import java.io.IOException;
 import java.util.ArrayList;
 
-import application.SerialUtils;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -16,20 +15,49 @@ import javafx.scene.control.Button;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
+import models.SerialUtils;
 import models.User;
 
+/**
+ * The LoginCotroller class passes data back and forth between the user and the system.
+ * It is also responsible for handling all user interactions while the Login view is active.
+ * @author Evan Loriot
+ * @author Joseph Klaszky
+ */
+/**
+ * @param move user input for the move they would like to make
+ * @param color current color
+ * @return boolean -- true if the input is valid and main can continue to the next turn,
+ * false otherwise
+ * @exception IndexOutOfBoundsException -- if the user enters badly formatted input.
+ * @see IndexOutOfBoundsException
+*/
 public class LoginController {
+	/**
+	 * Should we javadoc these vars? 
+	 */
 	@FXML
 	Button login;
 	@FXML
 	TextField username;
 	
+	/**
+	 * List of all known users.
+	 */
 	ArrayList<User> userList;
 	
+	/**
+	 * Called when the a user enters the Login view. Handles interactions with the user.
+	 * Evan - should we doc some of the important .setOn... stuff? Or do you think it'll be cool?
+	 * @param mainStage
+	 * @exception IOException -- Can be raised any time there is an issue with the users' files.
+	 * @see IOException
+	 */
 	public void start(Stage mainStage) {
 		try {
 			userList = SerialUtils.getUserList();
 		} catch (IOException e) {
+			System.out.println("Error getting the list of users.");
 			e.printStackTrace();
 		}
 		login.setOnMouseClicked(new EventHandler<MouseEvent>() {
@@ -53,8 +81,8 @@ public class LoginController {
 						Scene scene = new Scene(root);
 						mainStage.setScene(scene);
 					}
-					catch(Exception e) {
-						System.out.println("error");
+					catch(IOException e) {
+						System.out.println("Error logging the admin into the system.");
 						e.printStackTrace();
 					}
 				}
@@ -71,8 +99,8 @@ public class LoginController {
 						Scene scene = new Scene(root);
 						mainStage.setScene(scene);
 					}
-					catch(Exception e) {
-						System.out.println("error");
+					catch(IOException e) {
+						System.out.println("Error checking to see if the user exsists in the system.");
 						e.printStackTrace();
 					}
 				}
@@ -106,8 +134,8 @@ public class LoginController {
 						Scene scene = new Scene(root);
 						mainStage.setScene(scene);
 					}
-					catch(Exception e) {
-						System.out.println("error");
+					catch(IOException e) {
+						System.out.println("Error logging the admin into the system.");
 						e.printStackTrace();
 					}
 				}
@@ -124,8 +152,8 @@ public class LoginController {
 						Scene scene = new Scene(root);
 						mainStage.setScene(scene);
 					}
-					catch(Exception e) {
-						System.out.println("error");
+					catch(IOException e) {
+						System.out.println("Error checking to see if the user exsists in the system.");
 						e.printStackTrace();
 					}
 				}
@@ -140,6 +168,11 @@ public class LoginController {
 		});
 	}
 	
+	/**
+	 * Checks to see if a user with the passed user name already exists.
+	 * @param userName The name of the user we're looking for.
+	 * @return boolean -- True if the user is in the system, false otherwise.
+	 */
 	public boolean userExists(String userName) {
 		for(User u : userList){
 			if(u.toString().equals(userName)){
@@ -149,6 +182,11 @@ public class LoginController {
 		return false;
 	}
 	
+	/**
+	 * Looks through the user list to find a specific user.
+	 * @param userName The name of the user object you would like.
+	 * @return User -- It returns the requested user object if found, null otherwise.
+	 */
 	public User getUser(String userName) {
 		for(User u : userList){
 			if(u.toString().equals(userName)){

@@ -2,7 +2,6 @@ package controllers;
 
 import java.util.Optional;
 
-import application.SerialUtils;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.EventHandler;
@@ -22,6 +21,7 @@ import javafx.stage.Stage;
 import javafx.util.Callback;
 import models.Album;
 import models.AlbumListViewCell;
+import models.SerialUtils;
 import models.User;
 import utilities.Utilities;
 

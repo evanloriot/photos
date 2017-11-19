@@ -23,6 +23,7 @@ import javafx.util.Callback;
 import models.Album;
 import models.Photo;
 import models.PhotoListViewCell;
+import models.SerialUtils;
 import models.User;
 import utilities.Utilities;
 
@@ -99,9 +100,14 @@ public class SearchByTagController {
 							for(int i = 0; i < photos.size(); i++) {
 								photosArray.add(photos.get(i));
 							}
+							try {
 							album.photos = photosArray;
 							album.numPhotos = photosArray.size();
 							user.addAlbum(album);
+							SerialUtils.writeUserToFile(user);
+							} catch (Exception e){
+								e.printStackTrace();
+							}
 						});
 					}
 				}

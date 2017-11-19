@@ -25,6 +25,7 @@ import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import models.Album;
 import models.Photo;
+import models.SerialUtils;
 import models.User;
 import utilities.Utilities;
 
@@ -103,6 +104,7 @@ public class PhotoController {
 						user.getAlbum(album.name).getPhoto(photoObj.location).tags.add(tag.getText());
 						obsTags.add(tag.getText());
 						tag.setText("");
+						SerialUtils.writeUserToFile(user);
 					}
 				}
 				catch(Exception e) {
@@ -116,9 +118,14 @@ public class PhotoController {
 			if(event.getCode() == KeyCode.ENTER && !tag.getText().isEmpty()) {
 				try {
 					if(isTagFormatted(tag.getText())){
-						user.getAlbum(album.name).getPhoto(photoObj.location).tags.add(tag.getText());
-						obsTags.add(tag.getText());
-						tag.setText("");
+						try{
+							user.getAlbum(album.name).getPhoto(photoObj.location).tags.add(tag.getText());
+							obsTags.add(tag.getText());
+							tag.setText("");
+							SerialUtils.writeUserToFile(user);
+						} catch(Exception e){
+							e.printStackTrace();
+						}
 					}
 				}
 				catch(Exception e) {
@@ -165,7 +172,12 @@ public class PhotoController {
 					alert.setHeaderText("Are you sure you want to delete this tag: \"" + tag + "\"?");
 					Optional<ButtonType> result = alert.showAndWait();
 					if(result.get() == ButtonType.OK) {
-						photoObj.deleteTag(tag);
+						try{
+							photoObj.deleteTag(tag);
+							SerialUtils.writeUserToFile(user);
+						} catch(Exception e){
+							e.printStackTrace();
+						}
 						for(int i = 0; i < obsTags.size(); i++) {
 							if(tag.equals(obsTags.get(i))) {
 								obsTags.remove(i);
