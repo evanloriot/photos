@@ -96,9 +96,13 @@ public class SearchByDateController {
 							for(int i = 0; i < photos.size(); i++) {
 								photosArray.add(photos.get(i));
 							}
-							album.photos = photosArray;
-							album.numPhotos = photosArray.size();
-							user.addAlbum(album);
+							try{
+								album.photos = photosArray;
+								album.numPhotos = photosArray.size();
+								user.addAlbum(album);
+							} catch(Exception e){
+								e.printStackTrace();
+							}
 						});
 					}
 				}

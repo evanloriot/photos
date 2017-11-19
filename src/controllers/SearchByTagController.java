@@ -3,6 +3,7 @@ package controllers;
 import java.util.ArrayList;
 import java.util.Optional;
 
+import application.SerialUtils;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.EventHandler;
@@ -99,9 +100,14 @@ public class SearchByTagController {
 							for(int i = 0; i < photos.size(); i++) {
 								photosArray.add(photos.get(i));
 							}
+							try {
 							album.photos = photosArray;
 							album.numPhotos = photosArray.size();
 							user.addAlbum(album);
+							SerialUtils.writeUserToFile(user);
+							} catch (Exception e){
+								e.printStackTrace();
+							}
 						});
 					}
 				}
