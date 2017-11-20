@@ -1,5 +1,6 @@
 package controllers;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.Optional;
@@ -22,6 +23,11 @@ import models.SerialUtils;
 import models.User;
 import utilities.Utilities;
 
+/**
+ * This class is responsible for handling all user interactions while the Admin view.
+ * @author Evan Loriot
+ * @author Joseph Klaszky
+ */
 public class AdminController {
 	@FXML
 	Button logout;
@@ -32,13 +38,25 @@ public class AdminController {
 	@FXML
 	ListView<User> users;
 	
+	/**
+	 * This list keeps track of and displays all currently saved users.
+	 */
 	ObservableList<User> obsList;
 	
+	/**
+	 * Called whenever the user enters the admin view.
+	 * @param mainStage
+	 * @param userList Passed from the calling view -- list of all the currently saved users.
+	 * @exception IOException -- Can be raised any time there is an issue with the users' files.
+	 * @see IOException
+	 */
 	public void start(Stage mainStage, ArrayList<User> userList) {
 		obsList = FXCollections.observableArrayList(userList);
 		
 		User admin = SerialUtils.getUser(userList, "admin");
+		User stock = SerialUtils.getUser(userList, "stock");
 		obsList.remove(admin);
+		obsList.remove(stock);
 		users.setItems(obsList);
 		
 		logout.setOnMouseClicked(new EventHandler<MouseEvent>() {
@@ -103,6 +121,11 @@ public class AdminController {
 		});
 	}
 	
+	/**
+	 * Checks to see if there is already a user in the system with the currently entered name.
+	 * @param userName Name that is currently being checked.
+	 * @return boolean -- True if a user by that name already exists in the system, false otherwise.
+	 */
 	public boolean doesUserExist(String userName) {
 		for(int i = 0 ; i < obsList.size(); i++) {
 			if(userName.equals(obsList.get(i).toString())) {
@@ -112,6 +135,13 @@ public class AdminController {
 		return false;
 	}
 	
+	/**
+	 * Deletes a user from the system.
+	 * @param userName Name of the user to be deleted.
+	 * @param userList List of all the currently saved users.
+	 * @exception IOException -- Can be raised any time there is an issue with the users' files.
+	 * @see IOException
+	 */
 	public void deleteUser(String userName, ArrayList<User> userList) {
 		for(Iterator<User> iterator = obsList.iterator() ; iterator.hasNext() ; ){
 			User u = iterator.next();
@@ -123,6 +153,13 @@ public class AdminController {
 		}
 	}
 	
+	/**
+	 * Adds a new user to the system.
+	 * @param userName Name of the user to be added.
+	 * @param userList List of all of the current users.
+	 * @exception IOException -- Can be raised any time there is an issue with the users' files.
+	 * @see IOException
+	 */
 	public void addUser(String userName, ArrayList<User> userList) {
 		User u = new User(userName);
 		try {

@@ -1,5 +1,6 @@
 package controllers;
 
+import java.io.IOException;
 import java.time.Instant;
 import java.time.LocalDate;
 import java.time.ZoneId;
@@ -27,6 +28,11 @@ import models.PhotoListViewCell;
 import models.User;
 import utilities.Utilities;
 
+/**
+ * This class handles all interactions with the user while in the search by date view.
+ * @author Evan Loriot
+ * @author Joseph Klaszky
+ */
 public class SearchByDateController {
 	@FXML
 	Button logout;
@@ -43,15 +49,37 @@ public class SearchByDateController {
 	@FXML
 	Button createAlbum;
 	
-	
+	/**
+	 * List used to keep track of all the photos that are found by the search and displayed to
+	 * the user.
+	 */
 	ObservableList<ArrayList<Photo>> photos;
+	
+	/**
+	 * Keeps track of the current user.
+	 */
 	User user;
 	
+	/**
+	 * Beginning date of the search.
+	 */
 	Date searchStartDate;
+	/**
+	 * Ending date of the search.
+	 */
 	Date searchEndDate;
 	
+	/**
+	 * Keeps track of the currently selected photo.
+	 */
 	Photo selected = null;
 	
+	/**
+	 * Called when the user enters the searchByDate view.
+	 * @param mainStag
+	 * @exception IOException -- Can be raised any time there is an issue with the users' files.
+	 * @see IOException
+	 */
 	public void start(Stage mainStage) {
 		if(searchStartDate != null && searchEndDate != null) {
 			photos = FXCollections.observableArrayList(getPhotosFromSearch(searchStartDate, searchEndDate));
@@ -237,6 +265,12 @@ public class SearchByDateController {
 		});
 	}
 	
+	/**
+	 * Gets a list of photos that fit the current search parameters.
+	 * @param start Beginning date of the user's search.
+	 * @param end Ending date of the user's search.
+	 * @return A list of photo object that have dates within the parameters.
+	 */
 	public ArrayList<ArrayList<Photo>> getPhotosFromSearch(Date start, Date end){
 		ArrayList<ArrayList<Photo>> output = new ArrayList<ArrayList<Photo>>();
 		ArrayList<Photo> row = new ArrayList<Photo>();

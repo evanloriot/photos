@@ -1,5 +1,7 @@
 package application;
 
+import java.io.IOException;
+
 import controllers.LoginController;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
@@ -7,7 +9,17 @@ import javafx.scene.Scene;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
 
+/**
+ * The Photos class is the driver of our application.
+ * @author Evan Loriot
+ * @author Joseph Klaszky
+ */
 public class Photos extends Application{
+	/**
+	 * Starts the app and loads the first login view.
+	 * @exception IOException -- Can be raised any time there is an issue with the users' files.
+	 * @see IOException
+	 */
 	public void start(Stage primaryStage) {
 		try {
 			FXMLLoader loader = new FXMLLoader();

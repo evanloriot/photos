@@ -1,5 +1,7 @@
 package controllers;
 
+import java.io.IOException;
+
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -14,6 +16,11 @@ import javafx.stage.Stage;
 import models.Album;
 import models.User;
 
+/**
+ * This class is responsible for handling all user interactions while the Slide show view.
+ * @author Evan Loriot
+ * @author Joseph Klaszky
+ */
 public class SlideshowController {
 	@FXML
 	Label title;
@@ -28,10 +35,27 @@ public class SlideshowController {
 	@FXML
 	ImageView photo;
 	
+	/**
+	 * Keeps track of the current user.
+	 */
 	User user;
+	
+	/**
+	 * Keeps track of the current album.
+	 */
 	Album album;
+	
+	/**
+	 * Curent position in the album.
+	 */
 	int curr;
 	
+	/**
+	 * Called whenever the user enters the slideShow view.
+	 * @param mainStage
+	 * @exception IOException -- Can be raised any time there is an issue with the users' files.
+	 * @see IOException
+	 */
 	public void start(Stage mainStage) {
 		title.setText(title.getText() + " " + album.name + ": " + user.username);
 

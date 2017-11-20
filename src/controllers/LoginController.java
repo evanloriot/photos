@@ -19,23 +19,12 @@ import models.SerialUtils;
 import models.User;
 
 /**
+ * This class is responsible for handling all user interactions while the Login view is active.
  * The LoginCotroller class passes data back and forth between the user and the system.
- * It is also responsible for handling all user interactions while the Login view is active.
  * @author Evan Loriot
  * @author Joseph Klaszky
  */
-/**
- * @param move user input for the move they would like to make
- * @param color current color
- * @return boolean -- true if the input is valid and main can continue to the next turn,
- * false otherwise
- * @exception IndexOutOfBoundsException -- if the user enters badly formatted input.
- * @see IndexOutOfBoundsException
-*/
 public class LoginController {
-	/**
-	 * Should we javadoc these vars? 
-	 */
 	@FXML
 	Button login;
 	@FXML
@@ -48,7 +37,6 @@ public class LoginController {
 	
 	/**
 	 * Called when the a user enters the Login view. Handles interactions with the user.
-	 * Evan - should we doc some of the important .setOn... stuff? Or do you think it'll be cool?
 	 * @param mainStage
 	 * @exception IOException -- Can be raised any time there is an issue with the users' files.
 	 * @see IOException

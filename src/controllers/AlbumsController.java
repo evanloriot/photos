@@ -1,5 +1,6 @@
 package controllers;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Optional;
 
@@ -24,6 +25,12 @@ import models.SerialUtils;
 import models.User;
 import utilities.Utilities;
 
+/**
+ * The AlbumsController class handles all the interactions the user
+ * has with their saved albums.
+ * @author Evan Loriot
+ * @author Joseph Klaszky
+ */
 public class AlbumsController {
 	@FXML
 	Label title;
@@ -42,12 +49,28 @@ public class AlbumsController {
 	@FXML
 	ListView<ArrayList<Album>> albumsListView;
 	
+	/**
+	 * An observable list used to display the albums the user has saved.
+	 */
 	ObservableList<ArrayList<Album>> albums;
 
+	/**
+	 * Used to keep track of which album the user is currently interacting with.
+	 */
 	Album selected = null;
 	
+	/**
+	 * Keeps track of the current user object so that changes will be updated and saved
+	 * even after leaving this view.
+	 */
 	User user;
 	
+	/**
+	 * Called when the user enters the albums view. Handles all user interactions when adding/editing albums.
+	 * @param mainStage
+	 * @exception IOException -- Can be raised any time there is an issue with the users' files.
+	 * @see IOException
+	 */
 	public void start(Stage mainStage) {
 		title.setText(title.getText() + user.username);
 		
@@ -254,6 +277,11 @@ public class AlbumsController {
 		});
 	}
 	
+	/**
+	 * Checks to see if there is already an album with the same name that was just entered by the user.
+	 * @param name Name of the album that the user wants to add.
+	 * @return boolean -- True if the album already exists, false otherwise.
+	 */
 	public boolean doesAlbumExist(String name) {
 		for(int i = 0; i < albums.size(); i++) {
 			for(int j = 0; j < albums.get(i).size(); j++) {
@@ -265,6 +293,12 @@ public class AlbumsController {
 		return false;
 	}
 	
+	/**
+	 * Attempts to add a new album.
+	 * @param name Name of the album to be added.
+	 * @exception IOException -- Can be raised any time there is an issue with the users' files.
+	 * @see IOException
+	 */
 	public void addAlbum(String name) {
 		try{
 			Album album = new Album(name);
@@ -283,9 +317,16 @@ public class AlbumsController {
 		
 	}
 	
+	/**
+	 * Renames a user selected album.
+	 * @param name Name of the current album.
+	 * @param newName New name for the current album.
+ 	 * @exception IOException -- Can be raised any time there is an issue with the users' files.
+	 * @see IOException
+	 */
 	public void renameAlbum(String name, String newName) {
-		user.renameAlbum(name, newName);
 		try {
+			user.renameAlbum(name, newName);
 			SerialUtils.writeUserToFile(user);
 		}
 		catch(Exception e) {
@@ -299,6 +340,10 @@ public class AlbumsController {
 		albumsListView.refresh();
 	}
 	
+	/**
+	 * Looks for and deletes a user selected album.
+	 * @param name Name of the album the user would like to delete.
+	 */
 	public void deleteAlbum(String name) {
 		user.deleteAlbum(name);
 		for(int i = 0; i < albums.size(); i++) {
@@ -319,6 +364,10 @@ public class AlbumsController {
 		}
 	}
 	
+	/**
+	 * Gets all of the users albums
+	 * @return A list of lists -- Gets the list users albums. 
+	 */
 	public ArrayList<ArrayList<Album>> getAlbums(){
 		ArrayList<ArrayList<Album>> output = new ArrayList<ArrayList<Album>>();
 		ArrayList<Album> row = new ArrayList<Album>();
@@ -334,6 +383,9 @@ public class AlbumsController {
 		return output;
 	}
 	
+	/**
+	 * Changes the size of the album when new items are added or deleted.
+	 */
 	public void resizeAlbums() {
 		for(int i = 0; i < albums.size(); i++) {
 			if(albums.get(i).size() > 6) {
