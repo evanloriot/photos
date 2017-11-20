@@ -72,6 +72,6 @@
             <Font size="18.0" />
          </font>
       </Button>
-      <ListView fx:id="albumsListView" prefHeight="200.0" prefWidth="200.0" GridPane.columnSpan="3" GridPane.rowIndex="2" />
+      <ListView fx:id="albumsListView" prefHeight="200.0" prefWidth="200.0" stylesheets="@styles.css" GridPane.columnSpan="3" GridPane.rowIndex="2" />
    </children>
 </GridPane>

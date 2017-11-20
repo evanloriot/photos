@@ -1,6 +1,7 @@
 package controllers;
 
 import java.io.File;
+import java.util.ArrayList;
 import java.util.Optional;
 
 import javafx.collections.FXCollections;
@@ -51,9 +52,11 @@ public class AlbumController {
 	@FXML
 	Button back;
 	@FXML
-	ListView<Photo> photosListView;
+	ListView<ArrayList<Photo>> photosListView;
 	
-	ObservableList<Photo> photos;
+	ObservableList<ArrayList<Photo>> photos;
+	
+	Photo selected = null;
 	
 	Album album;
 	User user;
@@ -61,37 +64,68 @@ public class AlbumController {
 	public void start(Stage mainStage) {
 		title.setText(title.getText() + " " + album.name + " - " + user.username);
 		
-		photos = FXCollections.observableArrayList(album.photos);
+		photos = FXCollections.observableArrayList(getPhotos());
 		photosListView.setItems(photos);
-		photosListView.setCellFactory(new Callback<ListView<Photo>, ListCell<Photo>>(){
-			@Override
-			public ListCell<Photo> call(ListView<Photo> listView){
-				return new PhotoListViewCell();
-			}
-		});
+		photosListView.setCellFactory(x -> new PhotoListViewCell<>());
 		
 		photosListView.setOnMouseClicked(new EventHandler<MouseEvent>() {
 			@Override
 			public void handle(MouseEvent click){
-				Photo photo = photosListView.getSelectionModel().getSelectedItem();
+				Photo photo = new Photo("");
 				if(click.getClickCount() == 2) {
 					try {
-						FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/photo.fxml"));
-						Parent root = (Parent) loader.load();
-						
-						PhotoController photoController = loader.getController();
-						photoController.user = user;
-						photoController.album = album;
-						photoController.photoObj = photo;
-						photoController.backLocation = "album";
-						photoController.start(mainStage);
-						
-						Scene scene = new Scene(root);
-						mainStage.setScene(scene);
+						if(photosListView.getSelectionModel().getSelectedItem() != null && ((int)click.getSceneX() / 133) < photosListView.getSelectionModel().getSelectedItem().size()) {
+							if(photos.size() == 1) {
+								if(click.getSceneY() < 325) {
+									photo = photosListView.getSelectionModel().getSelectedItem().get((int)click.getSceneX() / 133);
+									
+									FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/photo.fxml"));
+									Parent root = (Parent) loader.load();
+									
+									PhotoController photoController = loader.getController();
+									photoController.user = user;
+									photoController.album = album;
+									photoController.photoObj = photo;
+									photoController.backLocation = "album";
+									photoController.start(mainStage);
+									
+									Scene scene = new Scene(root);
+									mainStage.setScene(scene);
+								}
+							}
+							else {
+								photo = photosListView.getSelectionModel().getSelectedItem().get((int)click.getSceneX() / 133);
+								
+								FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/photo.fxml"));
+								Parent root = (Parent) loader.load();
+								
+								PhotoController photoController = loader.getController();
+								photoController.user = user;
+								photoController.album = album;
+								photoController.photoObj = photo;
+								photoController.backLocation = "album";
+								photoController.start(mainStage);
+								
+								Scene scene = new Scene(root);
+								mainStage.setScene(scene);
+							}
+						}
 					}
 					catch(Exception e) {
 						System.out.println("error");
 						e.printStackTrace();
+					}
+				}
+				else if(click.getClickCount() == 1){
+					if(photosListView.getSelectionModel().getSelectedItem() != null && ((int)click.getSceneX() / 133) < photosListView.getSelectionModel().getSelectedItem().size()) {
+						if(photos.size() == 1) {
+							if(click.getSceneY() < 325) {
+								selected = photosListView.getSelectionModel().getSelectedItem().get((int)click.getSceneX() / 133);
+							}
+						}
+						else{
+							selected = photosListView.getSelectionModel().getSelectedItem().get((int)click.getSceneX() / 133);
+						}
 					}
 				}
 			}
@@ -193,7 +227,7 @@ public class AlbumController {
 			@Override
 			public void handle(MouseEvent click){
 				try {
-					Photo photo = photosListView.getSelectionModel().getSelectedItem();
+					Photo photo = selected;
 					if(photo == null) {
 						Alert alert = new Alert(AlertType.ERROR);
 						alert.initOwner(mainStage);
@@ -222,7 +256,7 @@ public class AlbumController {
 			@Override
 			public void handle(MouseEvent click){
 				try {
-					Photo photo = photosListView.getSelectionModel().getSelectedItem();
+					Photo photo = selected;
 					if(photo == null) {
 						Alert alert = new Alert(AlertType.ERROR);
 						alert.initOwner(mainStage);
@@ -286,7 +320,7 @@ public class AlbumController {
 			@Override
 			public void handle(MouseEvent click){
 				try {
-					Photo photo = photosListView.getSelectionModel().getSelectedItem();
+					Photo photo = selected;
 					if(photo == null) {
 						Alert alert = new Alert(AlertType.ERROR);
 						alert.initOwner(mainStage);
@@ -334,8 +368,24 @@ public class AlbumController {
 						Optional<String> result = dialog.showAndWait();
 						
 						result.ifPresent(albumName -> {
-							user.getAlbum(albumName).addPhoto(photo.location);
-							photos.add(photo);
+							if(albumName.equals(album.name)) {
+								addPhoto(photo.location);
+							}
+							else {
+								user.getAlbum(albumName).addPhoto(photo.location);
+								try {
+									SerialUtils.writeUserToFile(user);
+								}
+								catch(Exception e) {
+									e.printStackTrace();
+								}
+							}
+							try {
+								SerialUtils.writeUserToFile(user);
+							}
+							catch(Exception e) {
+								e.printStackTrace();
+							}
 							photosListView.refresh();
 						});
 					}
@@ -355,9 +405,14 @@ public class AlbumController {
 		try{
 			Photo photo = new Photo(location);
 			photo.album = album;
-			album.addPhoto(location);
-			photos.add(photo);
+			user.getAlbum(album.name).addPhoto(location);
 			SerialUtils.writeUserToFile(user);
+			if(photos.size() == 0) {
+				photos.add(new ArrayList<Photo>());
+			}
+			photos.get(photos.size() - 1).add(photo);
+			resizePhotos();
+			photosListView.refresh();
 		} catch(Exception e){
 			e.printStackTrace();
 		}
@@ -366,13 +421,54 @@ public class AlbumController {
 	public void deletePhoto(String location) {
 		album.deletePhoto(location);
 		for(int i = 0; i < photos.size(); i++) {
-			if(location.equals(photos.get(i).location)) {
-			try{				
-				photos.remove(i);
-				SerialUtils.writeUserToFile(user);
-			} catch(Exception e){
-				e.printStackTrace();
+			for(int j = 0; j < photos.get(i).size(); j++) {
+				if(location.equals(photos.get(i).get(j).location)) {
+					try{				
+						photos.get(i).remove(j);
+						resizePhotos();
+						photosListView.refresh();
+						SerialUtils.writeUserToFile(user);
+					} catch(Exception e){
+						e.printStackTrace();
+					}
+						return;
+					}
 			}
+		}
+	}
+	
+	public ArrayList<ArrayList<Photo>> getPhotos(){
+		ArrayList<ArrayList<Photo>> output = new ArrayList<ArrayList<Photo>>();
+		ArrayList<Photo> row = new ArrayList<Photo>();
+		int col;
+		for(int i = 0; i < user.getAlbum(album.name).photos.size(); i++) {
+			col = i % 6;
+			if(col == 0) {
+				row = new ArrayList<Photo>();
+				output.add(row);
+			}
+			row.add(user.getAlbum(album.name).photos.get(i));
+		}
+		return output;
+	}
+
+	public void resizePhotos() {
+		for(int i = 0; i < photos.size(); i++) {
+			if(photos.get(i).size() > 6) {
+				if(i == photos.size() - 1) {
+					photos.add(new ArrayList<Photo>());
+				}
+				while(photos.get(i).size() > 6) {
+					photos.get(i+1).add(0, photos.get(i).get(photos.get(i).size() - 1));
+					photos.get(i).remove(photos.get(i).size() - 1);
+				}
+			}	
+			else if(i != photos.size() - 1 && photos.get(i).size() < 6) {
+				photos.get(i).add(photos.get(i+1).get(0));
+				photos.get(i+1).remove(0);
+				if(photos.get(i+1).size() == 0) {
+					photos.remove(i+1);
+				}
 				return;
 			}
 		}

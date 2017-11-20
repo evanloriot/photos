@@ -1,5 +1,6 @@
 package controllers;
 
+import java.util.ArrayList;
 import java.util.Optional;
 
 import javafx.collections.FXCollections;
@@ -13,12 +14,10 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
-import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
-import javafx.util.Callback;
 import models.Album;
 import models.AlbumListViewCell;
 import models.SerialUtils;
@@ -41,45 +40,78 @@ public class AlbumsController {
 	@FXML
 	Button deleteAlbum;
 	@FXML
-	ListView<Album> albumsListView;
+	ListView<ArrayList<Album>> albumsListView;
 	
-	ObservableList<Album> albums;
+	ObservableList<ArrayList<Album>> albums;
+
+	Album selected = null;
 	
 	User user;
 	
 	public void start(Stage mainStage) {
 		title.setText(title.getText() + user.username);
 		
-		albums = FXCollections.observableArrayList(user.albums);
+		albums = FXCollections.observableArrayList(getAlbums());
 		albumsListView.setItems(albums);
-		albumsListView.setCellFactory(new Callback<ListView<Album>, ListCell<Album>>(){
-			@Override
-			public ListCell<Album> call(ListView<Album> listView){
-				return new AlbumListViewCell();
-			}
-		});
+		albumsListView.setCellFactory(x -> new AlbumListViewCell<>());
+		
 		albumsListView.refresh();
 		
 		albumsListView.setOnMouseClicked(new EventHandler<MouseEvent>() {
 			@Override
 			public void handle(MouseEvent click){
-				Album album = albumsListView.getSelectionModel().getSelectedItem();
+				Album album = new Album("");
 				if(click.getClickCount() == 2) {
 					try {
-						FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/album.fxml"));
-						Parent root = (Parent) loader.load();
-						
-						AlbumController albumController = loader.getController();
-						albumController.user = user;
-						albumController.album = album;
-						albumController.start(mainStage);
-						
-						Scene scene = new Scene(root);
-						mainStage.setScene(scene);
+						if(albumsListView.getSelectionModel().getSelectedItem() != null && ((int)click.getSceneX() / 133) < albumsListView.getSelectionModel().getSelectedItem().size()) {
+							if(albums.size() == 1) {
+								if(click.getSceneY() < 325) {
+									album = albumsListView.getSelectionModel().getSelectedItem().get((int)click.getSceneX() / 133);
+									
+									FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/album.fxml"));
+									Parent root = (Parent) loader.load();
+									
+									AlbumController albumController = loader.getController();
+									albumController.user = user;
+									albumController.album = album;
+									albumController.start(mainStage);
+									
+									Scene scene = new Scene(root);
+									mainStage.setScene(scene);
+								}
+							}
+							else {
+								album = albumsListView.getSelectionModel().getSelectedItem().get((int)click.getSceneX() / 133);
+								
+								FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/album.fxml"));
+								Parent root = (Parent) loader.load();
+								
+								AlbumController albumController = loader.getController();
+								albumController.user = user;
+								albumController.album = album;
+								albumController.start(mainStage);
+								
+								Scene scene = new Scene(root);
+								mainStage.setScene(scene);
+							}
+							
+						}
 					}
 					catch(Exception e) {
 						System.out.println("error");
 						e.printStackTrace();
+					}
+				}
+				else if(click.getClickCount() == 1) {
+					if(albumsListView.getSelectionModel().getSelectedItem() != null && ((int)click.getSceneX() / 133) < albumsListView.getSelectionModel().getSelectedItem().size()) {
+						if(albums.size() == 1) {
+							if(click.getSceneY() < 325) {
+								selected = albumsListView.getSelectionModel().getSelectedItem().get((int)click.getSceneX() / 133);
+							}
+						}
+						else{
+							selected = albumsListView.getSelectionModel().getSelectedItem().get((int)click.getSceneX() / 133);
+						}
 					}
 				}
 			}
@@ -171,7 +203,7 @@ public class AlbumsController {
 		renameAlbum.setOnMouseClicked(new EventHandler<MouseEvent>() {
 			@Override
 			public void handle(MouseEvent click){
-				Album album = albumsListView.getSelectionModel().getSelectedItem();
+				Album album = selected;
 				if(album == null) {
 					Alert alert = new Alert(AlertType.ERROR);
 					alert.initOwner(mainStage);
@@ -201,7 +233,7 @@ public class AlbumsController {
 		deleteAlbum.setOnMouseClicked(new EventHandler<MouseEvent>() {
 			@Override
 			public void handle(MouseEvent click){
-				Album album = albumsListView.getSelectionModel().getSelectedItem();
+				Album album = selected;
 				if(album == null) {
 					Alert alert = new Alert(AlertType.ERROR);
 					alert.initOwner(mainStage);
@@ -224,8 +256,10 @@ public class AlbumsController {
 	
 	public boolean doesAlbumExist(String name) {
 		for(int i = 0; i < albums.size(); i++) {
-			if(name.equals(albums.get(i).name)) {
-				return true;
+			for(int j = 0; j < albums.get(i).size(); j++) {
+				if(name.equals(albums.get(i).get(j).name)) {
+					return true;
+				}
 			}
 		}
 		return false;
@@ -235,7 +269,11 @@ public class AlbumsController {
 		try{
 			Album album = new Album(name);
 			user.addAlbum(album);
-			albums.add(album);
+			if(albums.size() == 0) {
+				albums.add(new ArrayList<Album>());
+			}
+			albums.get(albums.size() - 1).add(album);
+			resizeAlbums();
 			albumsListView.refresh();
 			SerialUtils.writeUserToFile(user);	
 		} catch(Exception e){
@@ -247,15 +285,15 @@ public class AlbumsController {
 	
 	public void renameAlbum(String name, String newName) {
 		user.renameAlbum(name, newName);
-		for(int i = 0; i < albums.size(); i++) {
-			if(name.equals(albums.get(i).name)) {
-				try{
-					albums.get(i).name = newName;
-					SerialUtils.writeUserToFile(user);			
-				} catch(Exception e){
-					System.out.println("Error adding new album");
-					e.printStackTrace();
-				}
+		try {
+			SerialUtils.writeUserToFile(user);
+		}
+		catch(Exception e) {
+			e.printStackTrace();
+		}
+		for(int i = 0; i < user.albums.size(); i++) {
+			if(name.equals(user.albums.get(i).name)) {
+				user.albums.get(i).name = newName;
 			}
 		}
 		albumsListView.refresh();
@@ -264,15 +302,55 @@ public class AlbumsController {
 	public void deleteAlbum(String name) {
 		user.deleteAlbum(name);
 		for(int i = 0; i < albums.size(); i++) {
-			if(name.equals(albums.get(i).name)) {
-				try{
-					albums.remove(i);
-					SerialUtils.writeUserToFile(user);			
-				} catch(Exception e){
-					System.out.println("Error adding new album");
-					e.printStackTrace();
+			for(int j = 0; j < albums.get(i).size(); j++) {
+				if(name.equals(albums.get(i).get(j).name)) {
+					try{
+						albums.get(i).remove(j);
+						resizeAlbums();
+						albumsListView.refresh();
+						SerialUtils.writeUserToFile(user);			
+					} catch(Exception e){
+						System.out.println("Error adding new album");
+						e.printStackTrace();
+					}
+					return;
 				}
-				return;
+			}
+		}
+	}
+	
+	public ArrayList<ArrayList<Album>> getAlbums(){
+		ArrayList<ArrayList<Album>> output = new ArrayList<ArrayList<Album>>();
+		ArrayList<Album> row = new ArrayList<Album>();
+		int col;
+		for(int i = 0; i < user.albums.size(); i++) {
+			col = i % 6;
+			if(col == 0) {
+				row = new ArrayList<Album>();
+				output.add(row);
+			}
+			row.add(user.albums.get(i));
+		}
+		return output;
+	}
+	
+	public void resizeAlbums() {
+		for(int i = 0; i < albums.size(); i++) {
+			if(albums.get(i).size() > 6) {
+				if(i == albums.size() - 1) {
+					albums.add(new ArrayList<Album>());
+				}
+				while(albums.get(i).size() > 6) {
+					albums.get(i+1).add(0, albums.get(i).get(albums.get(i).size() - 1));
+					albums.get(i).remove(albums.get(i).size() - 1);
+				}
+			}
+			else if(i != albums.size() - 1 && albums.get(i).size() < 6) {
+				albums.get(i).add(albums.get(i+1).get(0));
+				albums.get(i+1).remove(0);
+				if(albums.get(i+1).size() == 0) {
+					albums.remove(i+1);
+				}
 			}
 		}
 	}
