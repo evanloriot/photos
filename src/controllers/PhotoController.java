@@ -109,9 +109,9 @@ public class PhotoController {
 				try {
 					if(isTagFormatted(tag.getText())){
 						user.getAlbum(album.name).getPhoto(photoObj.location).tags.add(tag.getText());
+						SerialUtils.writeUserToFile(user);
 						obsTags.add(tag.getText());
 						tag.setText("");
-						SerialUtils.writeUserToFile(user);
 					}
 				}
 				catch(Exception e) {

@@ -46,7 +46,7 @@
             <Insets bottom="10.0" left="20.0" right="20.0" top="10.0" />
          </padding>
       </Button>
-      <ListView fx:id="photosListView" prefHeight="200.0" prefWidth="200.0" GridPane.columnSpan="4" GridPane.rowIndex="2" />
+      <ListView fx:id="photosListView" prefHeight="200.0" prefWidth="200.0" stylesheets="@styles.css" GridPane.columnSpan="4" GridPane.rowIndex="2" />
       <Button fx:id="back" mnemonicParsing="false" prefHeight="50.0" prefWidth="200.0" text="Back" GridPane.columnIndex="2" GridPane.columnSpan="2" GridPane.halignment="CENTER" GridPane.rowIndex="3" GridPane.valignment="CENTER">
          <font>
             <Font size="18.0" />

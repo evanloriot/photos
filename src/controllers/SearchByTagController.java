@@ -39,13 +39,15 @@ public class SearchByTagController {
 	@FXML
 	Button help;
 	@FXML 
-	ListView<Photo> photosListView;
+	ListView<ArrayList<Photo>> photosListView;
 	@FXML
 	Button createAlbum;
 	
 	
-	ObservableList<Photo> photos;
+	ObservableList<ArrayList<Photo>> photos;
 	User user;
+	
+	Photo selected = null;
 	
 	public void start(Stage mainStage) {
 		search.setDisable(true);
@@ -57,25 +59,63 @@ public class SearchByTagController {
 		photosListView.setOnMouseClicked(new EventHandler<MouseEvent>() {
 			@Override
 			public void handle(MouseEvent click){
-				Photo photo = photosListView.getSelectionModel().getSelectedItem();
+				Photo photo = new Photo("");
 				if(click.getClickCount() == 2) {
 					try {
-						FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/photo.fxml"));
-						Parent root = (Parent) loader.load();
+						if(photosListView.getSelectionModel().getSelectedItem() != null && ((int)click.getSceneX() / 133) < photosListView.getSelectionModel().getSelectedItem().size()) {
+							if(photos.size() == 1) {
+								if(click.getSceneY() < 325) {
+									photo = photosListView.getSelectionModel().getSelectedItem().get((int)click.getSceneX() / 133);
+									
+									FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/photo.fxml"));
+									Parent root = (Parent) loader.load();
+									
+									PhotoController photoController = loader.getController();
+									photoController.user = user;
+									photoController.album = photo.album;
+									photoController.photoObj = photo;
+									photoController.backLocation = "searchByTag";
+									photoController.start(mainStage);
+									
+									Scene scene = new Scene(root);
+									mainStage.setScene(scene);
+								}
+							}
+							else {
+								photo = photosListView.getSelectionModel().getSelectedItem().get((int)click.getSceneX() / 133);
+								
+								FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/photo.fxml"));
+								Parent root = (Parent) loader.load();
+								
+								PhotoController photoController = loader.getController();
+								photoController.user = user;
+								photoController.album = photo.album;
+								photoController.photoObj = photo;
+								photoController.backLocation = "searchByTag";
+								photoController.start(mainStage);
+								
+								Scene scene = new Scene(root);
+								mainStage.setScene(scene);
+							}
+						}
 						
-						PhotoController photoController = loader.getController();
-						photoController.user = user;
-						photoController.album = photo.album;
-						photoController.photoObj = photo;
-						photoController.backLocation = "searchByTag";
-						photoController.start(mainStage);
 						
-						Scene scene = new Scene(root);
-						mainStage.setScene(scene);
 					}
 					catch(Exception e) {
 						System.out.println("error");
 						e.printStackTrace();
+					}
+				}
+				else if(click.getClickCount() == 1){
+					if(photosListView.getSelectionModel().getSelectedItem() != null && ((int)click.getSceneX() / 133) < photosListView.getSelectionModel().getSelectedItem().size()) {
+						if(photos.size() == 1) {
+							if(click.getSceneY() < 325) {
+								selected = photosListView.getSelectionModel().getSelectedItem().get((int)click.getSceneX() / 133);
+							}
+						}
+						else{
+							selected = photosListView.getSelectionModel().getSelectedItem().get((int)click.getSceneX() / 133);
+						}
 					}
 				}
 			}
@@ -98,7 +138,9 @@ public class SearchByTagController {
 							Album album = new Album(albumName);
 							ArrayList<Photo> photosArray = new ArrayList<Photo>();
 							for(int i = 0; i < photos.size(); i++) {
-								photosArray.add(photos.get(i));
+								for(int j = 0; j < photos.get(i).size(); j++) {
+									photosArray.add(photos.get(i).get(j));
+								}
 							}
 							try {
 							album.photos = photosArray;
@@ -125,12 +167,7 @@ public class SearchByTagController {
 					if(areParametersValid(parameters.getText())) {
 						photos = FXCollections.observableArrayList(getPhotosFromSearch(parameters.getText()));
 						photosListView.setItems(photos);
-						photosListView.setCellFactory(new Callback<ListView<Photo>, ListCell<Photo>>(){
-							@Override
-							public ListCell<Photo> call(ListView<Photo> listView){
-								return new PhotoListViewCell();
-							}
-						});
+						photosListView.setCellFactory(x -> new PhotoListViewCell<>());
 					}
 				}
 				catch(Exception e) {
@@ -146,12 +183,7 @@ public class SearchByTagController {
 					if(areParametersValid(parameters.getText())) {
 						photos = FXCollections.observableArrayList(getPhotosFromSearch(parameters.getText()));
 						photosListView.setItems(photos);
-						photosListView.setCellFactory(new Callback<ListView<Photo>, ListCell<Photo>>(){
-							@Override
-							public ListCell<Photo> call(ListView<Photo> listView){
-								return new PhotoListViewCell();
-							}
-						});
+						photosListView.setCellFactory(x -> new PhotoListViewCell<>());
 					}
 				}
 				catch(Exception e) {
@@ -224,13 +256,22 @@ public class SearchByTagController {
 		return tags.matches("([a-zA-Z0-9]*[=][a-zA-Z0-9]*[,]?)*");
 	}
 	
-	public ArrayList<Photo> getPhotosFromSearch(String search){
-		ArrayList<Photo> output = new ArrayList<Photo>();
+	public ArrayList<ArrayList<Photo>> getPhotosFromSearch(String search){
+		ArrayList<ArrayList<Photo>> output = new ArrayList<ArrayList<Photo>>();
+		ArrayList<Photo> row = new ArrayList<Photo>();
+		int col;
+		int count = 0;
 		for(int i = 0; i < user.albums.size(); i++) {
 			for(int j = 0; j < user.albums.get(i).photos.size(); j++) {
 				for(int k = 0; k < user.albums.get(i).photos.get(j).tags.size(); k++) {
 					if(search.contains(user.albums.get(i).photos.get(j).tags.get(k))) {
-						output.add(user.albums.get(i).photos.get(j));
+						col = count % 6;
+						if(col == 0) {
+							row = new ArrayList<Photo>();
+							output.add(row);
+						}
+						row.add(user.albums.get(i).photos.get(j));
+						count++;
 					}
 				}
 			}

@@ -368,7 +368,18 @@ public class AlbumController {
 						Optional<String> result = dialog.showAndWait();
 						
 						result.ifPresent(albumName -> {
-							user.getAlbum(albumName).addPhoto(photo.location);
+							if(albumName.equals(album.name)) {
+								addPhoto(photo.location);
+							}
+							else {
+								user.getAlbum(albumName).addPhoto(photo.location);
+								try {
+									SerialUtils.writeUserToFile(user);
+								}
+								catch(Exception e) {
+									e.printStackTrace();
+								}
+							}
 							try {
 								SerialUtils.writeUserToFile(user);
 							}
@@ -395,13 +406,13 @@ public class AlbumController {
 			Photo photo = new Photo(location);
 			photo.album = album;
 			user.getAlbum(album.name).addPhoto(location);
+			SerialUtils.writeUserToFile(user);
 			if(photos.size() == 0) {
 				photos.add(new ArrayList<Photo>());
 			}
 			photos.get(photos.size() - 1).add(photo);
 			resizePhotos();
 			photosListView.refresh();
-			SerialUtils.writeUserToFile(user);
 		} catch(Exception e){
 			e.printStackTrace();
 		}
