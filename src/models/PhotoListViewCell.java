@@ -48,7 +48,7 @@ public class PhotoListViewCell <T extends ArrayList<Photo>> extends ListCell<T> 
 		ObservableList<Node> childrens = grid.getChildren();
 		
 		for(Node node : childrens) {
-			if(grid.getRowIndex(node) == row && grid.getColumnIndex(node) == col) {
+			if(GridPane.getRowIndex(node) == row && GridPane.getColumnIndex(node) == col) {
 				node.setStyle("-fx-background-color: #0295D1");
 			}
 			else {
