@@ -23,7 +23,7 @@ public class SerialUtils implements Serializable{
 	/**
 	 * The directory that will be used to store the users' data.
 	 */
-	public static final String storeDir =  new File("").getAbsolutePath() +"\\src\\models\\dat";
+	public static final String storeDir =  new File("").getAbsolutePath() + File.separator + "src" + File.separator + "models" + File.separator + "dat";
 	/**
 	 * The file extension to be used.
 	 */

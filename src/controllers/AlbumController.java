@@ -206,9 +206,9 @@ public class AlbumController {
 					if(file != null) {
 						location = file.getPath();
 						String[] split = location.split("\\\\");
-						location = "file://";
+						location = "file:" + File.separator + File.separator;
 						for(int i = 0; i < split.length; i++) {
-							location += "/";
+							location += File.separator;
 							location += split[i];
 						}
 					}

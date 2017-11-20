@@ -61,7 +61,7 @@ public class Photo implements Serializable{
 		path = "";
 		for(int i = 0; i < parts.length; i++) {
 			path += parts[i];
-			path += "\\\\";
+			path += File.separator + File.separator;
 		}
 		return path;
 	}
