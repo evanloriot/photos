@@ -1,5 +1,6 @@
 package controllers;
 
+import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Optional;
@@ -30,6 +31,12 @@ import models.SerialUtils;
 import models.User;
 import utilities.Utilities;
 
+/**
+ * The PhotoController class handles all the interactions the user
+ * has with photos that are already in an album.
+ * @author Evan Loriot
+ * @author Joseph Klaszky
+ */
 public class PhotoController {
 	@FXML
 	Label title;
@@ -54,15 +61,56 @@ public class PhotoController {
 	@FXML
 	ListView<String> tags;
 	
+	/**
+	 * Holds list of tags associated with a photo
+	 * and held in an observable list so that it can be
+	 * displayed to the user.
+	 */
 	ObservableList<String> obsTags;
+	
+	/**
+	 * The user associated with the album that contains this photo.
+	 */
 	User user;
+	
+	/**
+	 * The album containing the photo that is currently being interacted with.
+	 */
 	Album album;
+	
+	/**
+	 * The photo object that the user is currently interacting with.
+	 */
 	Photo photoObj;
+	
+	/**
+	 * Tells the user of the context in which they are interacting with this photo
+	 * and where to return to after they are finished.
+	 */
 	String backLocation;
+	
+	/**
+	 * If the user is in this context from a tag search this param contains the 
+	 * content of that search
+	 */
 	String backSearchParameters;
+	
+	/**
+	 * If the user is in this context from a date search this contains the start date.
+	 */
 	Date backStartDate;
+	
+	/**
+	 * If the user is in this context from a date search this contains the end date.
+	 */
 	Date backEndDate;
 	
+	/**
+	 * Called when the a user enters the Photo view. Handles interactions with the user when editing a photo.
+	 * @param mainStage
+	 * @exception IOException -- Can be raised any time there is an issue with the users' files.
+	 * @see IOException
+	 */
 	public void start(Stage mainStage) {
 		obsTags = FXCollections.observableArrayList(photoObj.tags);
 		tags.setItems(obsTags);
@@ -266,6 +314,11 @@ public class PhotoController {
 		});
 	}
 	
+	/**
+	 * Check to make sure the tag is of the format 'string=string'
+	 * @param tag Takes in a string that will be used as a tag
+	 * @return boolean -- True if the tage is formatted properly, false otherwise
+	 */
 	public boolean isTagFormatted(String tag) {
 		return tag.matches("[a-zA-Z0-9]*[=][a-zA-Z0-9]*");
 	}

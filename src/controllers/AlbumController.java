@@ -1,6 +1,7 @@
 package controllers;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Optional;
 
@@ -32,6 +33,11 @@ import models.PhotoListViewCell;
 import models.SerialUtils;
 import models.User;
 
+/**
+ * This class responsible for handling all user interactions while the album view is active.
+ * @author Evan Loriot
+ * @author Joseph Klaszky
+ */
 public class AlbumController {
 	@FXML
 	Label title;
@@ -52,13 +58,34 @@ public class AlbumController {
 	@FXML
 	ListView<ArrayList<Photo>> photosListView;
 	
+	/**
+	 * When the user is in an album this list keeps track of all the photos that album
+	 * contains and displays them to the user.
+	 */
 	ObservableList<ArrayList<Photo>> photos;
 	
+	/**
+	 * Keeps track of the currently selected photo.
+	 */
 	Photo selected = null;
 	
+	/**
+	 * Keeps track of the album that is currently being interacted with.
+	 */
 	Album album;
+	
+	/**
+	 * Keeps track of the current user.
+	 */
 	User user;
 	
+	/**
+	 * Called when the user enters the album view. Handles all user interactions when adding items to/editing items in
+	 * an album.
+	 * @param mainStage
+	 * @exception IOException -- Can be raised any time there is an issue with the users' files.
+	 * @see IOException
+	 */
 	public void start(Stage mainStage) {
 		title.setText(title.getText() + " " + album.name + " - " + user.username);
 		
@@ -396,6 +423,10 @@ public class AlbumController {
 		});
 	}
 
+	/**
+	 * Adds a photo to the album that the user is currently in.
+	 * @param location Location of the photo that is being added.
+	 */
 	public void addPhoto(String location) {
 		if(location.isEmpty()) {
 			return;
@@ -416,6 +447,10 @@ public class AlbumController {
 		}
 	}
 	
+	/**
+	 * Deletes a photo from the album the user is currently in.
+	 * @param location Location of the photo that is being deleted.
+	 */
 	public void deletePhoto(String location) {
 		album.deletePhoto(location);
 		for(int i = 0; i < photos.size(); i++) {
@@ -435,6 +470,10 @@ public class AlbumController {
 		}
 	}
 	
+	/**
+	 * Gets a list all of the photos in the current album.
+	 * @return A list of all of the photo objects contained in this album.
+	 */
 	public ArrayList<ArrayList<Photo>> getPhotos(){
 		ArrayList<ArrayList<Photo>> output = new ArrayList<ArrayList<Photo>>();
 		ArrayList<Photo> row = new ArrayList<Photo>();
@@ -450,6 +489,9 @@ public class AlbumController {
 		return output;
 	}
 
+	/**
+	 * Resizes a list of photo objects
+	 */
 	public void resizePhotos() {
 		for(int i = 0; i < photos.size(); i++) {
 			if(photos.get(i).size() > 6) {

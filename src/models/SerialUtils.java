@@ -28,7 +28,10 @@ public class SerialUtils implements Serializable{
 	 * The file extension to be used.
 	 */
 	public static final String fileEnd = ".dat";
-	
+	/**
+	 * The directory that holds the stock photos.
+	 */
+	public static final String stockDir =  new File("").getAbsolutePath() + File.separator + "src" + File.separator + "models" + File.separator + "stock";
 	/**
 	 * Checks to see if the a user name is already taken when the admin is trying to add new users.
 	 * @param userList The list of all known users.
@@ -106,7 +109,7 @@ public class SerialUtils implements Serializable{
 					System.out.println("Error when reading the list of users from file.");
 					e.printStackTrace();
 				}
-			}
+			} 
 		}
 		return users;
 	}
@@ -123,7 +126,7 @@ public class SerialUtils implements Serializable{
 				return u;
 			}
 		}
-		
 		return null;
 	}
+	
 }

@@ -1,5 +1,6 @@
 package controllers;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Optional;
 
@@ -25,6 +26,11 @@ import models.SerialUtils;
 import models.User;
 import utilities.Utilities;
 
+/**
+ * This class is responsible for handling all user interactions while the search by tag view.
+ * @author Evan Loriot
+ * @author Joseph Klaszky
+ */
 public class SearchByTagController {
 	@FXML
 	Button logout;
@@ -41,14 +47,33 @@ public class SearchByTagController {
 	@FXML
 	Button createAlbum;
 	
-	
+	/**
+	 * The list that is used to keep track and display all of the photos that 
+	 * were found by the current tag search.
+	 */
 	ObservableList<ArrayList<Photo>> photos;
+	
+	/**
+	 * Keeps track of the current user.
+	 */
 	User user;
 	
+	/**
+	 * The string that the user entered when searching.
+	 */
 	String searchParameters;
 	
+	/**
+	 * Keeps track of the currently selected photo.
+	 */
 	Photo selected = null;
 	
+	/**
+	 * Called when the user enters the searchByTag view.
+	 * @param mainStage
+	 * @exception IOException -- Can be raised any time there is an issue with the users' files.
+	 * @see IOException
+	 */
 	public void start(Stage mainStage) {
 		search.setDisable(true);
 		
@@ -266,10 +291,20 @@ public class SearchByTagController {
 		});
 	}
 	
+	/**
+	 * Check to a search can be performed on the current tag.
+	 * @param tags The current search tag.
+	 * @return boolean -- True if the entered string fits the accepted format, false otherwise
+	 */
 	public boolean areParametersValid(String tags) {
 		return tags.matches("([a-zA-Z0-9]*[=][a-zA-Z0-9]*[,]?)*");
 	}
 	
+	/**
+	 * Gets the photos that fit the parameters of the current search.
+	 * @param search Current tag that is being searched.
+	 * @return A list of photo objects that fit the search parameters.
+	 */
 	public ArrayList<ArrayList<Photo>> getPhotosFromSearch(String search){
 		ArrayList<ArrayList<Photo>> output = new ArrayList<ArrayList<Photo>>();
 		ArrayList<Photo> row = new ArrayList<Photo>();
