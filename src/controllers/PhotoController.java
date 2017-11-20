@@ -1,6 +1,7 @@
 package controllers;
 
 import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.Optional;
 
 import javafx.collections.FXCollections;
@@ -58,6 +59,9 @@ public class PhotoController {
 	Album album;
 	Photo photoObj;
 	String backLocation;
+	String backSearchParameters;
+	Date backStartDate;
+	Date backEndDate;
 	
 	public void start(Stage mainStage) {
 		obsTags = FXCollections.observableArrayList(photoObj.tags);
@@ -85,7 +89,7 @@ public class PhotoController {
 				try {
 					Optional<String> result = Utilities.showDialog("Save","Edit Caption","Enter a new caption.","Caption","Caption:");
 					result.ifPresent(captionText -> {
-						user.getAlbum(album.name).getPhoto(photoObj.location).caption = captionText;
+						user.getAlbum(album.name).getPhoto(photoObj.location, photoObj.instance).caption = captionText;
 						caption.setText(captionText);
 						try {
 							SerialUtils.writeUserToFile(user);
@@ -108,7 +112,18 @@ public class PhotoController {
 			public void handle(MouseEvent click){
 				try {
 					if(isTagFormatted(tag.getText())){
-						user.getAlbum(album.name).getPhoto(photoObj.location).tags.add(tag.getText());
+						for(int i = 0; i < user.getAlbum(album.name).getPhoto(photoObj.location, photoObj.instance).tags.size(); i++) {
+							if(user.getAlbum(album.name).getPhoto(photoObj.location, photoObj.instance).tags.get(0).equals(tag.getText())){
+								Alert alert = new Alert(AlertType.ERROR);
+								alert.initOwner(mainStage);
+							    alert.setTitle("Error");
+							    alert.setHeaderText("Tag already exists.");
+							    alert.showAndWait();
+							    tag.setText("");
+								return;
+							}
+						}
+						user.getAlbum(album.name).getPhoto(photoObj.location, photoObj.instance).tags.add(tag.getText());
 						SerialUtils.writeUserToFile(user);
 						obsTags.add(tag.getText());
 						tag.setText("");
@@ -125,8 +140,19 @@ public class PhotoController {
 			if(event.getCode() == KeyCode.ENTER && !tag.getText().isEmpty()) {
 				try {
 					if(isTagFormatted(tag.getText())){
+						for(int i = 0; i < user.getAlbum(album.name).getPhoto(photoObj.location, photoObj.instance).tags.size(); i++) {
+							if(user.getAlbum(album.name).getPhoto(photoObj.location, photoObj.instance).tags.get(0).equals(tag.getText())){
+								Alert alert = new Alert(AlertType.ERROR);
+								alert.initOwner(mainStage);
+							    alert.setTitle("Error");
+							    alert.setHeaderText("Tag already exists.");
+							    alert.showAndWait();
+							    tag.setText("");
+								return;
+							}
+						}
 						try{
-							user.getAlbum(album.name).getPhoto(photoObj.location).tags.add(tag.getText());
+							user.getAlbum(album.name).getPhoto(photoObj.location, photoObj.instance).tags.add(tag.getText());
 							obsTags.add(tag.getText());
 							tag.setText("");
 							SerialUtils.writeUserToFile(user);
@@ -216,6 +242,8 @@ public class PhotoController {
 						
 						SearchByDateController searchByDateController = loader.getController();
 						searchByDateController.user = user;
+						searchByDateController.searchStartDate = backStartDate;
+						searchByDateController.searchEndDate = backEndDate;
 						searchByDateController.start(mainStage);
 					}
 					else {
@@ -224,6 +252,7 @@ public class PhotoController {
 						
 						SearchByTagController searchByTagController = loader.getController();
 						searchByTagController.user = user;
+						searchByTagController.searchParameters = backSearchParameters;
 						searchByTagController.start(mainStage);
 					}
 					Scene scene = new Scene(root);

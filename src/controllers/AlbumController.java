@@ -18,7 +18,6 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.Dialog;
 import javafx.scene.control.Label;
-import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.ButtonBar.ButtonData;
@@ -27,7 +26,6 @@ import javafx.scene.layout.GridPane;
 import javafx.stage.FileChooser;
 import javafx.stage.FileChooser.ExtensionFilter;
 import javafx.stage.Stage;
-import javafx.util.Callback;
 import models.Album;
 import models.Photo;
 import models.PhotoListViewCell;
@@ -71,7 +69,7 @@ public class AlbumController {
 		photosListView.setOnMouseClicked(new EventHandler<MouseEvent>() {
 			@Override
 			public void handle(MouseEvent click){
-				Photo photo = new Photo("");
+				Photo photo = new Photo("", 0);
 				if(click.getClickCount() == 2) {
 					try {
 						if(photosListView.getSelectionModel().getSelectedItem() != null && ((int)click.getSceneX() / 133) < photosListView.getSelectionModel().getSelectedItem().size()) {
@@ -403,9 +401,9 @@ public class AlbumController {
 			return;
 		}
 		try{
-			Photo photo = new Photo(location);
+			Photo photo = user.getAlbum(album.name).addPhoto(location);
 			photo.album = album;
-			user.getAlbum(album.name).addPhoto(location);
+			
 			SerialUtils.writeUserToFile(user);
 			if(photos.size() == 0) {
 				photos.add(new ArrayList<Photo>());

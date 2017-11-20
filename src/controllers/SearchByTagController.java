@@ -12,14 +12,12 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
-import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
-import javafx.util.Callback;
 import models.Album;
 import models.Photo;
 import models.PhotoListViewCell;
@@ -47,6 +45,8 @@ public class SearchByTagController {
 	ObservableList<ArrayList<Photo>> photos;
 	User user;
 	
+	String searchParameters;
+	
 	Photo selected = null;
 	
 	public void start(Stage mainStage) {
@@ -56,10 +56,18 @@ public class SearchByTagController {
 			search.setDisable(newValue.trim().isEmpty());
 		});
 		
+		if(searchParameters != null) {
+			photos = FXCollections.observableArrayList(getPhotosFromSearch(searchParameters));
+			photosListView.setItems(photos);
+			photosListView.setCellFactory(x -> new PhotoListViewCell<>());
+			
+			parameters.setText(searchParameters);
+		}
+		
 		photosListView.setOnMouseClicked(new EventHandler<MouseEvent>() {
 			@Override
 			public void handle(MouseEvent click){
-				Photo photo = new Photo("");
+				Photo photo = new Photo("", 0);
 				if(click.getClickCount() == 2) {
 					try {
 						if(photosListView.getSelectionModel().getSelectedItem() != null && ((int)click.getSceneX() / 133) < photosListView.getSelectionModel().getSelectedItem().size()) {
@@ -75,6 +83,7 @@ public class SearchByTagController {
 									photoController.album = photo.album;
 									photoController.photoObj = photo;
 									photoController.backLocation = "searchByTag";
+									photoController.backSearchParameters = searchParameters;
 									photoController.start(mainStage);
 									
 									Scene scene = new Scene(root);
@@ -92,6 +101,7 @@ public class SearchByTagController {
 								photoController.album = photo.album;
 								photoController.photoObj = photo;
 								photoController.backLocation = "searchByTag";
+								photoController.backSearchParameters = searchParameters;
 								photoController.start(mainStage);
 								
 								Scene scene = new Scene(root);
@@ -168,6 +178,8 @@ public class SearchByTagController {
 						photos = FXCollections.observableArrayList(getPhotosFromSearch(parameters.getText()));
 						photosListView.setItems(photos);
 						photosListView.setCellFactory(x -> new PhotoListViewCell<>());
+						
+						searchParameters = parameters.getText();
 					}
 				}
 				catch(Exception e) {
@@ -184,6 +196,8 @@ public class SearchByTagController {
 						photos = FXCollections.observableArrayList(getPhotosFromSearch(parameters.getText()));
 						photosListView.setItems(photos);
 						photosListView.setCellFactory(x -> new PhotoListViewCell<>());
+						
+						searchParameters = parameters.getText();
 					}
 				}
 				catch(Exception e) {
