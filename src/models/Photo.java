@@ -39,16 +39,20 @@ public class Photo implements Serializable{
 	 */
 	public Album album;
 	
+	public int instance;
+
 	/**
 	 * Constructor
 	 * @param location The location of the photo.
+	 * @param instance number of photo in album if duplicate
 	 */
-	public Photo(String location) {
+	public Photo(String location, int instance) {
 		this.location = location;
 		caption = "";
 		tags = new ArrayList<String>();
 		File file = new File(location.isEmpty() ? "" : getAbsolutePath());
 		captureDate = new Date(file.lastModified());
+		this.instance = instance;
 	}
 	
 	public String getAbsolutePath() {

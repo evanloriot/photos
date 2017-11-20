@@ -101,9 +101,17 @@ public class Album implements Serializable{
 	 * Adds a new photo to the album and increments the number of photos.
 	 * @param location The location of the photo being added to the album.
 	 */
-	public void addPhoto(String location) {
-		photos.add(new Photo(location));
+	public Photo addPhoto(String location) {
+		int instance = 1;
+		for(int i = 0; i < photos.size(); i++) {
+			if(photos.get(i).location.equals(location)) {
+				instance++;
+			}
+		}
+		Photo output = new Photo(location, instance);
+		photos.add(output);
 		numPhotos++;
+		return output;
 	}
 	
 	/**
@@ -125,9 +133,9 @@ public class Album implements Serializable{
 	 * @param location The location of the photo the method is looking for.
 	 * @return Photo -- If found returns the photo object from the album.
 	 */
-	public Photo getPhoto(String location) {
+	public Photo getPhoto(String location, int instance) {
 		for(int i = 0; i < photos.size(); i++) {
-			if(location.equals(photos.get(i).location)) {
+			if(location.equals(photos.get(i).location) && photos.get(i).instance == instance) {
 				return photos.get(i);
 			}
 		}

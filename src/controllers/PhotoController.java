@@ -89,7 +89,7 @@ public class PhotoController {
 				try {
 					Optional<String> result = Utilities.showDialog("Save","Edit Caption","Enter a new caption.","Caption","Caption:");
 					result.ifPresent(captionText -> {
-						user.getAlbum(album.name).getPhoto(photoObj.location).caption = captionText;
+						user.getAlbum(album.name).getPhoto(photoObj.location, photoObj.instance).caption = captionText;
 						caption.setText(captionText);
 						try {
 							SerialUtils.writeUserToFile(user);
@@ -112,7 +112,7 @@ public class PhotoController {
 			public void handle(MouseEvent click){
 				try {
 					if(isTagFormatted(tag.getText())){
-						user.getAlbum(album.name).getPhoto(photoObj.location).tags.add(tag.getText());
+						user.getAlbum(album.name).getPhoto(photoObj.location, photoObj.instance).tags.add(tag.getText());
 						SerialUtils.writeUserToFile(user);
 						obsTags.add(tag.getText());
 						tag.setText("");
@@ -130,7 +130,7 @@ public class PhotoController {
 				try {
 					if(isTagFormatted(tag.getText())){
 						try{
-							user.getAlbum(album.name).getPhoto(photoObj.location).tags.add(tag.getText());
+							user.getAlbum(album.name).getPhoto(photoObj.location, photoObj.instance).tags.add(tag.getText());
 							obsTags.add(tag.getText());
 							tag.setText("");
 							SerialUtils.writeUserToFile(user);

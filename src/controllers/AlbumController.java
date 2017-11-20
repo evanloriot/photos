@@ -71,7 +71,7 @@ public class AlbumController {
 		photosListView.setOnMouseClicked(new EventHandler<MouseEvent>() {
 			@Override
 			public void handle(MouseEvent click){
-				Photo photo = new Photo("");
+				Photo photo = new Photo("", 0);
 				if(click.getClickCount() == 2) {
 					try {
 						if(photosListView.getSelectionModel().getSelectedItem() != null && ((int)click.getSceneX() / 133) < photosListView.getSelectionModel().getSelectedItem().size()) {
@@ -403,9 +403,9 @@ public class AlbumController {
 			return;
 		}
 		try{
-			Photo photo = new Photo(location);
+			Photo photo = user.getAlbum(album.name).addPhoto(location);
 			photo.album = album;
-			user.getAlbum(album.name).addPhoto(location);
+			
 			SerialUtils.writeUserToFile(user);
 			if(photos.size() == 0) {
 				photos.add(new ArrayList<Photo>());

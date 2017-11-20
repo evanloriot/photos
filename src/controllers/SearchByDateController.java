@@ -67,7 +67,7 @@ public class SearchByDateController {
 		photosListView.setOnMouseClicked(new EventHandler<MouseEvent>() {
 			@Override
 			public void handle(MouseEvent click){
-				Photo photo = new Photo("");
+				Photo photo = new Photo("", 0);
 				if(click.getClickCount() == 2) {
 					try {
 						if(photosListView.getSelectionModel().getSelectedItem() != null && ((int)click.getSceneX() / 133) < photosListView.getSelectionModel().getSelectedItem().size()) {
