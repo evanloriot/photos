@@ -47,6 +47,8 @@ public class SearchByTagController {
 	ObservableList<ArrayList<Photo>> photos;
 	User user;
 	
+	String searchParameters;
+	
 	Photo selected = null;
 	
 	public void start(Stage mainStage) {
@@ -55,6 +57,14 @@ public class SearchByTagController {
 		parameters.textProperty().addListener((observable, oldValue, newValue) -> {
 			search.setDisable(newValue.trim().isEmpty());
 		});
+		
+		if(searchParameters != null) {
+			photos = FXCollections.observableArrayList(getPhotosFromSearch(searchParameters));
+			photosListView.setItems(photos);
+			photosListView.setCellFactory(x -> new PhotoListViewCell<>());
+			
+			parameters.setText(searchParameters);
+		}
 		
 		photosListView.setOnMouseClicked(new EventHandler<MouseEvent>() {
 			@Override
@@ -75,6 +85,7 @@ public class SearchByTagController {
 									photoController.album = photo.album;
 									photoController.photoObj = photo;
 									photoController.backLocation = "searchByTag";
+									photoController.backSearchParameters = searchParameters;
 									photoController.start(mainStage);
 									
 									Scene scene = new Scene(root);
@@ -92,6 +103,7 @@ public class SearchByTagController {
 								photoController.album = photo.album;
 								photoController.photoObj = photo;
 								photoController.backLocation = "searchByTag";
+								photoController.backSearchParameters = searchParameters;
 								photoController.start(mainStage);
 								
 								Scene scene = new Scene(root);
@@ -168,6 +180,8 @@ public class SearchByTagController {
 						photos = FXCollections.observableArrayList(getPhotosFromSearch(parameters.getText()));
 						photosListView.setItems(photos);
 						photosListView.setCellFactory(x -> new PhotoListViewCell<>());
+						
+						searchParameters = parameters.getText();
 					}
 				}
 				catch(Exception e) {
@@ -184,6 +198,8 @@ public class SearchByTagController {
 						photos = FXCollections.observableArrayList(getPhotosFromSearch(parameters.getText()));
 						photosListView.setItems(photos);
 						photosListView.setCellFactory(x -> new PhotoListViewCell<>());
+						
+						searchParameters = parameters.getText();
 					}
 				}
 				catch(Exception e) {

@@ -49,9 +49,21 @@ public class SearchByDateController {
 	ObservableList<ArrayList<Photo>> photos;
 	User user;
 	
+	Date searchStartDate;
+	Date searchEndDate;
+	
 	Photo selected = null;
 	
 	public void start(Stage mainStage) {
+		if(searchStartDate != null && searchEndDate != null) {
+			photos = FXCollections.observableArrayList(getPhotosFromSearch(searchStartDate, searchEndDate));
+			photosListView.setItems(photos);
+			photosListView.setCellFactory(x -> new PhotoListViewCell<>());
+
+			startDate.setValue(searchStartDate.toInstant().atZone(ZoneId.systemDefault()).toLocalDate());
+			endDate.setValue(searchEndDate.toInstant().atZone(ZoneId.systemDefault()).toLocalDate());
+		}
+		
 		photosListView.setOnMouseClicked(new EventHandler<MouseEvent>() {
 			@Override
 			public void handle(MouseEvent click){
@@ -71,6 +83,8 @@ public class SearchByDateController {
 									photoController.album = photo.album;
 									photoController.photoObj = photo;
 									photoController.backLocation = "searchByDate";
+									photoController.backStartDate = searchStartDate;
+									photoController.backEndDate = searchEndDate;
 									photoController.start(mainStage);
 									
 									Scene scene = new Scene(root);
@@ -88,6 +102,8 @@ public class SearchByDateController {
 								photoController.album = photo.album;
 								photoController.photoObj = photo;
 								photoController.backLocation = "searchByDate";
+								photoController.backStartDate = searchStartDate;
+								photoController.backEndDate = searchEndDate;
 								photoController.start(mainStage);
 								
 								Scene scene = new Scene(root);
@@ -169,6 +185,9 @@ public class SearchByDateController {
 						photos = FXCollections.observableArrayList(getPhotosFromSearch(start, end));
 						photosListView.setItems(photos);
 						photosListView.setCellFactory(x -> new PhotoListViewCell<>());
+						
+						searchStartDate = start;
+						searchEndDate = end;
 					}
 				}
 				catch(Exception e) {

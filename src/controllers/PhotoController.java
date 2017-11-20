@@ -1,6 +1,7 @@
 package controllers;
 
 import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.Optional;
 
 import javafx.collections.FXCollections;
@@ -58,6 +59,9 @@ public class PhotoController {
 	Album album;
 	Photo photoObj;
 	String backLocation;
+	String backSearchParameters;
+	Date backStartDate;
+	Date backEndDate;
 	
 	public void start(Stage mainStage) {
 		obsTags = FXCollections.observableArrayList(photoObj.tags);
@@ -216,6 +220,8 @@ public class PhotoController {
 						
 						SearchByDateController searchByDateController = loader.getController();
 						searchByDateController.user = user;
+						searchByDateController.searchStartDate = backStartDate;
+						searchByDateController.searchEndDate = backEndDate;
 						searchByDateController.start(mainStage);
 					}
 					else {
@@ -224,6 +230,7 @@ public class PhotoController {
 						
 						SearchByTagController searchByTagController = loader.getController();
 						searchByTagController.user = user;
+						searchByTagController.searchParameters = backSearchParameters;
 						searchByTagController.start(mainStage);
 					}
 					Scene scene = new Scene(root);
