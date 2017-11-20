@@ -112,6 +112,17 @@ public class PhotoController {
 			public void handle(MouseEvent click){
 				try {
 					if(isTagFormatted(tag.getText())){
+						for(int i = 0; i < user.getAlbum(album.name).getPhoto(photoObj.location, photoObj.instance).tags.size(); i++) {
+							if(user.getAlbum(album.name).getPhoto(photoObj.location, photoObj.instance).tags.get(0).equals(tag.getText())){
+								Alert alert = new Alert(AlertType.ERROR);
+								alert.initOwner(mainStage);
+							    alert.setTitle("Error");
+							    alert.setHeaderText("Tag already exists.");
+							    alert.showAndWait();
+							    tag.setText("");
+								return;
+							}
+						}
 						user.getAlbum(album.name).getPhoto(photoObj.location, photoObj.instance).tags.add(tag.getText());
 						SerialUtils.writeUserToFile(user);
 						obsTags.add(tag.getText());
@@ -129,6 +140,17 @@ public class PhotoController {
 			if(event.getCode() == KeyCode.ENTER && !tag.getText().isEmpty()) {
 				try {
 					if(isTagFormatted(tag.getText())){
+						for(int i = 0; i < user.getAlbum(album.name).getPhoto(photoObj.location, photoObj.instance).tags.size(); i++) {
+							if(user.getAlbum(album.name).getPhoto(photoObj.location, photoObj.instance).tags.get(0).equals(tag.getText())){
+								Alert alert = new Alert(AlertType.ERROR);
+								alert.initOwner(mainStage);
+							    alert.setTitle("Error");
+							    alert.setHeaderText("Tag already exists.");
+							    alert.showAndWait();
+							    tag.setText("");
+								return;
+							}
+						}
 						try{
 							user.getAlbum(album.name).getPhoto(photoObj.location, photoObj.instance).tags.add(tag.getText());
 							obsTags.add(tag.getText());
