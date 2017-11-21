@@ -25,6 +25,7 @@ import javafx.stage.Stage;
 import models.Album;
 import models.Photo;
 import models.PhotoListViewCell;
+import models.SerialUtils;
 import models.User;
 import utilities.Utilities;
 
@@ -139,8 +140,7 @@ public class SearchByDateController {
 						
 					}
 					catch(Exception e) {
-						System.out.println("error");
-						e.printStackTrace();
+						SerialUtils.errorAlert(e);
 					}
 				}
 				else if(click.getClickCount() == 1){
@@ -184,14 +184,13 @@ public class SearchByDateController {
 								album.numPhotos = photosArray.size();
 								user.addAlbum(album);
 							} catch(Exception e){
-								e.printStackTrace();
+								SerialUtils.errorAlert(e);
 							}
 						});
 					}
 				}
 				catch(Exception e) {
-					System.out.println("error");
-					e.printStackTrace();
+					SerialUtils.errorAlert(e);
 				}
 			}
 		});
@@ -217,8 +216,7 @@ public class SearchByDateController {
 					}
 				}
 				catch(Exception e) {
-					System.out.println("error");
-					e.printStackTrace();
+					SerialUtils.errorAlert(e);
 				}
 			}
 		});
@@ -238,8 +236,7 @@ public class SearchByDateController {
 					mainStage.setScene(scene);
 				}
 				catch(Exception e) {
-					System.out.println("error");
-					e.printStackTrace();
+					SerialUtils.errorAlert(e);
 				}
 			}
 		});
@@ -258,8 +255,7 @@ public class SearchByDateController {
 					mainStage.setScene(scene);
 				}
 				catch(Exception e) {
-					System.out.println("error");
-					e.printStackTrace();
+					SerialUtils.errorAlert(e);
 				}
 			}
 		});

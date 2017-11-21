@@ -11,6 +11,13 @@ import javafx.scene.control.ListCell;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
 
+/**
+ * This class manages each individual photo cell item that is displayed in 
+ * the album view.
+ * @author Evan Loriot
+ * @author Joseph Klaszky
+ * @param <T>
+ */
 public class PhotoListViewCell <T extends ArrayList<Photo>> extends ListCell<T> {
 	@Override
 	public void updateItem(T item, boolean empty) {
@@ -44,6 +51,12 @@ public class PhotoListViewCell <T extends ArrayList<Photo>> extends ListCell<T> 
 		}
 	}
 	
+	/**
+	 * Method that handles the user selecting a specific photo cell.
+	 * @param row
+	 * @param col
+	 * @param grid
+	 */
 	public void select(int row, int col, GridPane grid) {
 		ObservableList<Node> childrens = grid.getChildren();
 		
@@ -57,6 +70,10 @@ public class PhotoListViewCell <T extends ArrayList<Photo>> extends ListCell<T> 
 		}
 	}
 	
+	/**
+	 * Helper method
+	 * @param grid
+	 */
 	public void deselect(GridPane grid) {
 		ObservableList<Node> childrens = grid.getChildren();
 		

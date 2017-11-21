@@ -142,15 +142,14 @@ public class PhotoController {
 						try {
 							SerialUtils.writeUserToFile(user);
 						}
-						catch(Exception e){
-							e.printStackTrace();
+						catch(IOException e){
+							SerialUtils.errorAlert(e);
 						}
 						
 					});
 				}
 				catch(Exception e) {
-					System.out.println("error");
-					e.printStackTrace();
+					SerialUtils.errorAlert(e);
 				}
 			}
 		});
@@ -177,9 +176,8 @@ public class PhotoController {
 						tag.setText("");
 					}
 				}
-				catch(Exception e) {
-					System.out.println("error");
-					e.printStackTrace();
+				catch(IOException e) {
+					SerialUtils.errorAlert(e);
 				}
 			}
 		});
@@ -204,14 +202,13 @@ public class PhotoController {
 							obsTags.add(tag.getText());
 							tag.setText("");
 							SerialUtils.writeUserToFile(user);
-						} catch(Exception e){
-							e.printStackTrace();
+						} catch(IOException e){
+							SerialUtils.errorAlert(e);
 						}
 					}
 				}
 				catch(Exception e) {
-					System.out.println("error");
-					e.printStackTrace();
+					SerialUtils.errorAlert(e);
 				}
 			}
 		});
@@ -229,9 +226,8 @@ public class PhotoController {
 					Scene scene = new Scene(root);
 					mainStage.setScene(scene);
 				}
-				catch(Exception e) {
-					System.out.println("error");
-					e.printStackTrace();
+				catch(IOException e) {
+					SerialUtils.errorAlert(e);
 				}
 			}
 		});
@@ -257,7 +253,7 @@ public class PhotoController {
 							photoObj.deleteTag(tag);
 							SerialUtils.writeUserToFile(user);
 						} catch(Exception e){
-							e.printStackTrace();
+							SerialUtils.errorAlert(e);
 						}
 						for(int i = 0; i < obsTags.size(); i++) {
 							if(tag.equals(obsTags.get(i))) {
@@ -307,8 +303,7 @@ public class PhotoController {
 					mainStage.setScene(scene);
 				}
 				catch(Exception e) {
-					System.out.println("error");
-					e.printStackTrace();
+					SerialUtils.errorAlert(e);
 				}
 			}
 		});

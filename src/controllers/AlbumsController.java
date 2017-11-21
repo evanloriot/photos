@@ -120,9 +120,8 @@ public class AlbumsController {
 							
 						}
 					}
-					catch(Exception e) {
-						System.out.println("error");
-						e.printStackTrace();
+					catch(IOException e) {
+						SerialUtils.errorAlert(e);
 					}
 				}
 				else if(click.getClickCount() == 1) {
@@ -154,9 +153,8 @@ public class AlbumsController {
 					Scene scene = new Scene(root);
 					mainStage.setScene(scene);
 				}
-				catch(Exception e) {
-					System.out.println("error");
-					e.printStackTrace();
+				catch(IOException e) {
+					SerialUtils.errorAlert(e);
 				}
 			}
 		});
@@ -175,9 +173,8 @@ public class AlbumsController {
 					Scene scene = new Scene(root);
 					mainStage.setScene(scene);
 				}
-				catch(Exception e) {
-					System.out.println("error");
-					e.printStackTrace();
+				catch(IOException e) {
+					SerialUtils.errorAlert(e);
 				}
 			}
 		});
@@ -196,9 +193,8 @@ public class AlbumsController {
 					Scene scene = new Scene(root);
 					mainStage.setScene(scene);
 				}
-				catch(Exception e) {
-					System.out.println("error");
-					e.printStackTrace();
+				catch(IOException e) {
+					SerialUtils.errorAlert(e);
 				}
 			}
 		});
@@ -310,9 +306,8 @@ public class AlbumsController {
 			resizeAlbums();
 			albumsListView.refresh();
 			SerialUtils.writeUserToFile(user);	
-		} catch(Exception e){
-			System.out.println("Error adding new album");
-			e.printStackTrace();
+		} catch(IOException e){
+			SerialUtils.errorAlert(e);
 		}
 		
 	}
@@ -329,8 +324,8 @@ public class AlbumsController {
 			user.renameAlbum(name, newName);
 			SerialUtils.writeUserToFile(user);
 		}
-		catch(Exception e) {
-			e.printStackTrace();
+		catch(IOException e) {
+			SerialUtils.errorAlert(e);
 		}
 		for(int i = 0; i < user.albums.size(); i++) {
 			if(name.equals(user.albums.get(i).name)) {
@@ -354,9 +349,8 @@ public class AlbumsController {
 						resizeAlbums();
 						albumsListView.refresh();
 						SerialUtils.writeUserToFile(user);			
-					} catch(Exception e){
-						System.out.println("Error adding new album");
-						e.printStackTrace();
+					} catch(IOException e){
+						SerialUtils.errorAlert(e);
 					}
 					return;
 				}

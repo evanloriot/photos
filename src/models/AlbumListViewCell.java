@@ -11,8 +11,17 @@ import javafx.scene.control.ListCell;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
 
+/**
+ * This class handles each cell in an a list of albums 
+ * @author Evan Loriot
+ * @autho Joseph Klaszky
+ * @param <T> 
+ */
 public class AlbumListViewCell<T extends ArrayList<Album>> extends ListCell<T> {
 	
+	/**
+	 * This handles and updates that need to be done to a album cell as a result of user interactions
+	 */
 	@Override
 	public void updateItem(T item, boolean empty) {
 		super.updateItem(item,  empty);
@@ -45,6 +54,12 @@ public class AlbumListViewCell<T extends ArrayList<Album>> extends ListCell<T> {
 		}
 	}
 	
+	/**
+	 * Method that handles the user selecting a specific album cell.
+	 * @param row
+	 * @param col
+	 * @param grid
+	 */
 	public void select(int row, int col, GridPane grid) {
 		ObservableList<Node> childrens = grid.getChildren();
 
@@ -58,6 +73,10 @@ public class AlbumListViewCell<T extends ArrayList<Album>> extends ListCell<T> {
 	    }
 	}
 	
+	/**
+	 * Helper method
+	 * @param grid
+	 */
 	public void deselect(GridPane grid) {
 		ObservableList<Node> childrens = grid.getChildren();
 

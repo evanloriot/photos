@@ -137,8 +137,7 @@ public class SearchByTagController {
 						
 					}
 					catch(Exception e) {
-						System.out.println("error");
-						e.printStackTrace();
+						SerialUtils.errorAlert(e);
 					}
 				}
 				else if(click.getClickCount() == 1){
@@ -183,14 +182,13 @@ public class SearchByTagController {
 							user.addAlbum(album);
 							SerialUtils.writeUserToFile(user);
 							} catch (Exception e){
-								e.printStackTrace();
+								SerialUtils.errorAlert(e);
 							}
 						});
 					}
 				}
 				catch(Exception e) {
-					System.out.println("error");
-					e.printStackTrace();
+					SerialUtils.errorAlert(e);
 				}
 			}
 		});
@@ -208,8 +206,7 @@ public class SearchByTagController {
 					}
 				}
 				catch(Exception e) {
-					System.out.println("error");
-					e.printStackTrace();
+					SerialUtils.errorAlert(e);
 				}
 			}
 		});
@@ -226,8 +223,7 @@ public class SearchByTagController {
 					}
 				}
 				catch(Exception e) {
-					System.out.println("error");
-					e.printStackTrace();
+					SerialUtils.errorAlert(e);
 				}
 			}
 		});
@@ -243,8 +239,7 @@ public class SearchByTagController {
 				    alert.showAndWait();
 				}
 				catch(Exception e) {
-					System.out.println("error");
-					e.printStackTrace();
+					SerialUtils.errorAlert(e);
 				}
 			}
 		});
@@ -264,8 +259,7 @@ public class SearchByTagController {
 					mainStage.setScene(scene);
 				}
 				catch(Exception e) {
-					System.out.println("error");
-					e.printStackTrace();
+					SerialUtils.errorAlert(e);
 				}
 			}
 		});
@@ -284,8 +278,7 @@ public class SearchByTagController {
 					mainStage.setScene(scene);
 				}
 				catch(Exception e) {
-					System.out.println("error");
-					e.printStackTrace();
+					SerialUtils.errorAlert(e);
 				}
 			}
 		});

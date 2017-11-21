@@ -72,9 +72,8 @@ public class AdminController {
 					Scene scene = new Scene(root);
 					mainStage.setScene(scene);
 				}
-				catch(Exception e) {
-					System.out.println("error");
-					e.printStackTrace();
+				catch(IOException e) {
+					SerialUtils.errorAlert(e);
 				}
 			}
 		});
@@ -166,9 +165,8 @@ public class AdminController {
 			SerialUtils.writeUserToFile(u);
 			obsList.add(u);
 			userList.add(u);
-		} catch (Exception e){
-			System.out.println("Error occured adding a user");
-			e.printStackTrace();
+		} catch (IOException e){
+			SerialUtils.errorAlert(e);
 		}
 
 	}

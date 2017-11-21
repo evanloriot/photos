@@ -12,7 +12,21 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.ButtonBar.ButtonData;
 import javafx.scene.layout.GridPane;
 
+/**
+ * This class provides needed utility for our controller classes.
+ * @author Evan Loriot
+ * @author Joseph Klaszky
+ */
 public class Utilities {
+	/**
+	 * Creates a new dialog to be displayed to the user.
+	 * @param confirmText
+	 * @param title
+	 * @param header
+	 * @param promptText
+	 * @param labelText
+	 * @return Optionally returns a string
+	 */
 	public static Optional<String> showDialog(String confirmText, String title, String header, String promptText, String labelText){
 		Dialog<String> dialog = new Dialog<>();
 		dialog.setTitle(title);
