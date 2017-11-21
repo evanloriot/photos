@@ -1,7 +1,5 @@
 package application;
 
-import java.io.IOException;
-
 import controllers.LoginController;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
@@ -41,6 +39,10 @@ public class Photos extends Application{
 		
 	}
 
+	/**
+	 * Main method of application launching any in line arguments
+	 * @param args in line arguments
+	 */
 	public static void main(String[] args) {
 		launch(args);
 	}

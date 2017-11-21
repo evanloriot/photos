@@ -18,6 +18,9 @@ import javafx.scene.layout.GridPane;
  * @author Joseph Klaszky
  */
 public class PhotoListViewCell <T extends ArrayList<Photo>> extends ListCell<T> {
+	/**
+	 * This handles and updates that need to be done to a photo cell as a result of user interactions
+	 */
 	@Override
 	public void updateItem(T item, boolean empty) {
 		super.updateItem(item,  empty);

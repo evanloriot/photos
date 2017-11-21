@@ -39,22 +39,49 @@ import models.User;
  * @author Joseph Klaszky
  */
 public class AlbumController {
+	/**
+	 * View title
+	 */
 	@FXML
 	Label title;
+	/**
+	 * Button to log user out of system
+	 */
 	@FXML
 	Button logout;
+	/**
+	 * Button to add a Photo to Album
+	 */
 	@FXML
 	Button addPhoto;
+	/**
+	 * Button to delete selected Photo from Album
+	 */
 	@FXML
 	Button deletePhoto;
+	/**
+	 * Button to move selected Photo from Album to another Album
+	 */
 	@FXML
 	Button movePhoto;
+	/**
+	 * Button to copy selected Photo from Album to another Album
+	 */
 	@FXML
 	Button copyPhoto;
+	/**
+	 * Button to send user to slideshow view
+	 */
 	@FXML
 	Button playSlideshow;
+	/**
+	 * Button to send user to previous screen
+	 */
 	@FXML
 	Button back;
+	/**
+	 * Listing of all Photos in Album
+	 */
 	@FXML
 	ListView<ArrayList<Photo>> photosListView;
 	

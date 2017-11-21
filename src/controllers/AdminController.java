@@ -29,12 +29,24 @@ import utilities.Utilities;
  * @author Joseph Klaszky
  */
 public class AdminController {
+	/**
+	 * Button to log user out
+	 */
 	@FXML
 	Button logout;
+	/**
+	 * Button to add a new user
+	 */
 	@FXML
 	Button add;
+	/**
+	 * Button to delete a selected user
+	 */
 	@FXML
 	Button delete;
+	/**
+	 * Listing of all system users
+	 */
 	@FXML
 	ListView<User> users;
 	

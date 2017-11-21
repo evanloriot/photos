@@ -32,20 +32,44 @@ import utilities.Utilities;
  * @author Joseph Klaszky
  */
 public class AlbumsController {
+	/**
+	 * View title
+	 */
 	@FXML
 	Label title;
+	/**
+	 * Button to log user out of system.
+	 */
 	@FXML
 	Button logout;
+	/**
+	 * Button to send user to search by tag view.
+	 */
 	@FXML
 	Button searchByTag;
+	/**
+	 * Button to send user to search by date view.
+	 */
 	@FXML
 	Button searchByDate;
+	/**
+	 * Create album button.
+	 */
 	@FXML
 	Button createAlbum;
+	/**
+	 * Rename album button.
+	 */
 	@FXML
 	Button renameAlbum;
+	/**
+	 * Delete album button.
+	 */
 	@FXML
 	Button deleteAlbum;
+	/**
+	 * Listing of all albums from a single user.
+	 */
 	@FXML
 	ListView<ArrayList<Album>> albumsListView;
 	

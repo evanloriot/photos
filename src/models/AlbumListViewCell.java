@@ -17,7 +17,6 @@ import javafx.scene.layout.GridPane;
  * @author Joseph Klaszky
  */
 public class AlbumListViewCell<T extends ArrayList<Album>> extends ListCell<T> {
-	
 	/**
 	 * This handles and updates that need to be done to a album cell as a result of user interactions
 	 */

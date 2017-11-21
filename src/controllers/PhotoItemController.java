@@ -17,15 +17,24 @@ import models.SerialUtils;
  * @author Joseph Klaszky
  */
 public class PhotoItemController {
+	/**
+	 * GridPane for single photo cell in album view
+	 */
 	@FXML
 	GridPane gridPane;
+	/**
+	 * Image of photo.
+	 */
 	@FXML
 	ImageView photo;
+	/**
+	 * Caption of photo.
+	 */
 	@FXML
 	Text caption;
 	
 	/**
-	 * Used to interact with an individual photo item.
+	 * Class used to interact with an individual photo item in album view.
 	 */
 	public PhotoItemController() {
 		FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/_photoListItem.fxml"));

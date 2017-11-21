@@ -132,6 +132,10 @@ public class SerialUtils implements Serializable{
 		return null;
 	}
 	
+	/**
+	 * Displays an error when user object cannot be written to serialized file.
+	 * @param e Exception object.
+	 */
 	public static void errorAlert(Exception e){
 		Alert alert = new Alert(AlertType.ERROR);
 	    alert.setTitle("Error");

@@ -28,8 +28,14 @@ import models.User;
  * @author Joseph Klaszky
  */
 public class LoginController {
+	/**
+	 * Button to log in as username typed into username
+	 */
 	@FXML
 	Button login;
+	/**
+	 * Field containing user inputted username
+	 */
 	@FXML
 	TextField username;
 	
@@ -189,7 +195,9 @@ public class LoginController {
 		
 		return null;
 	}
-	
+	/*
+	 * Creates a stock user with an album named "Stock" populated with photos from /models/stock/ if no user exists already
+	 */
 	public void createStockUser() {
 		if(userExists("stock")) {
 			return;

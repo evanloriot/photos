@@ -38,26 +38,59 @@ import utilities.Utilities;
  * @author Joseph Klaszky
  */
 public class PhotoController {
+	/**
+	 * View title
+	 */
 	@FXML
 	Label title;
+	/**
+	 * Button to log user out of system.
+	 */
 	@FXML
 	Button logout;
+	/**
+	 * Button to return to previous view.
+	 */
 	@FXML
 	Button back;
+	/**
+	 * Image of photo
+	 */
 	@FXML
 	ImageView photo;
+	/**
+	 * Caption text. Non-editable.
+	 */
 	@FXML
 	TextField caption;
+	/**
+	 * Date of image last modified (aka creation date)
+	 */
 	@FXML
 	Text date;
+	/**
+	 * Button to prompt caption edit window.
+	 */
 	@FXML
 	Button editCaption;
+	/**
+	 * Field to type in a tag to be added.
+	 */
 	@FXML
 	TextField tag;
+	/**
+	 * Button to add tag to photo typed into 'tag' field.
+	 */
 	@FXML
 	Button addTag;
+	/**
+	 * Button to delete selected tag from photo.
+	 */
 	@FXML
 	Button deleteTag;
+	/**
+	 * Listing of all tags associated with photo.
+	 */
 	@FXML
 	ListView<String> tags;
 	

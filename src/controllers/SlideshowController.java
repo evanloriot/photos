@@ -1,7 +1,5 @@
 package controllers;
 
-import java.io.IOException;
-
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -23,16 +21,34 @@ import models.User;
  * @author Joseph Klaszky
  */
 public class SlideshowController {
+	/**
+	 * View title
+	 */
 	@FXML
 	Label title;
+	/**
+	 * Button to log user out of system.
+	 */
 	@FXML
 	Button logout;
+	/**
+	 * Button to send user to previous view.
+	 */
 	@FXML 
 	Button back;
+	/**
+	 * Button to load previous photo in album.
+	 */
 	@FXML
 	Button previous;
+	/**
+	 * Button to load next photo in album.
+	 */
 	@FXML
 	Button next;
+	/**
+	 * Image of current photo.
+	 */
 	@FXML
 	ImageView photo;
 	

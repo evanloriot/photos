@@ -17,13 +17,27 @@ import models.SerialUtils;
  *
  */
 public class AlbumItemController {
+	/**
+	 * GridPane for one album cell
+	 */
 	@FXML
 	GridPane gridPane;
+	/**
+	 * Album name
+	 */
 	@FXML
 	Text data;
+	/**
+	 * Album image - first picture thumb if numPhotos != 0, else default album thumb
+	 */
 	@FXML
 	ImageView thumb;
 	
+	/**
+	 * Class handling the creation of a single cell (1/6) from albums display.
+	 * @author Evan Loriot
+	 * @author Joseph Klaszky
+	 */
 	public AlbumItemController() {
 		FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/_albumListItem.fxml"));
 		loader.setController(this);

@@ -1,6 +1,5 @@
 package controllers;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Optional;
 
@@ -32,18 +31,39 @@ import utilities.Utilities;
  * @author Joseph Klaszky
  */
 public class SearchByTagController {
+	/**
+	 * Button to log user out of system.
+	 */
 	@FXML
 	Button logout;
+	/**
+	 * Button to send user to previous page.
+	 */
 	@FXML
 	Button back;
+	/**
+	 * Text field for user to input tag parameters to search by.
+	 */
 	@FXML
 	TextField parameters;
+	/**
+	 * Button to begin search of photos and populate 'photosListView'
+	 */
 	@FXML
 	Button search;
+	/**
+	 * Button to show prompt for acceptable parameter format.
+	 */
 	@FXML
 	Button help;
+	/**
+	 * Listing of all photos that match parameters found in 'startDate' and 'endDate'.
+	 */
 	@FXML 
 	ListView<ArrayList<Photo>> photosListView;
+	/**
+	 * Button to create album with all displayed photos from search. 
+	 */
 	@FXML
 	Button createAlbum;
 	

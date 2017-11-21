@@ -1,6 +1,5 @@
 package controllers;
 
-import java.io.IOException;
 import java.time.Instant;
 import java.time.LocalDate;
 import java.time.ZoneId;
@@ -35,18 +34,39 @@ import utilities.Utilities;
  * @author Joseph Klaszky
  */
 public class SearchByDateController {
+	/**
+	 * Button to log user out of system.
+	 */
 	@FXML
 	Button logout;
+	/**
+	 * Button to send user to previous page.
+	 */
 	@FXML
 	Button back;
+	/**
+	 * Date selection field to enter start parameter.
+	 */
 	@FXML
 	DatePicker startDate;
+	/**
+	 * Date selection field to enter end parameter.
+	 */
 	@FXML
 	DatePicker endDate;
+	/**
+	 * Button to begin search of photos and populate 'photosListView'
+	 */
 	@FXML
 	Button search;
+	/**
+	 * Listing of all photos that match parameters found in 'startDate' and 'endDate'.
+	 */
 	@FXML 
 	ListView<ArrayList<Photo>> photosListView;
+	/**
+	 * Button to create album with all displayed photos from search. 
+	 */
 	@FXML
 	Button createAlbum;
 	
