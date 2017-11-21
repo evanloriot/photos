@@ -1,6 +1,8 @@
 package controllers;
 
+import java.io.File;
 import java.io.IOException;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 
 import javafx.event.EventHandler;
@@ -15,6 +17,7 @@ import javafx.scene.control.Button;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
+import models.Album;
 import models.SerialUtils;
 import models.User;
 
@@ -42,6 +45,15 @@ public class LoginController {
 	public void start(Stage mainStage) {
 		try {
 			userList = SerialUtils.getUserList();
+			boolean hasStock = false;
+			for(int i = 0; i < userList.size(); i++) {
+				if(userList.get(i).username.equals("stock")) {
+					hasStock = true;
+				}
+			}
+			if(!hasStock) {
+				createStockUser();
+			}
 		} catch (IOException e) {
 			SerialUtils.errorAlert(e);
 		}
@@ -176,5 +188,44 @@ public class LoginController {
 		}
 		
 		return null;
+	}
+	
+	public void createStockUser() {
+		if(userExists("stock")) {
+			return;
+		}
+
+		try {
+			User user = new User("stock");
+			Album album = new Album("Stock");
+			String[] photos = {
+					"android-logo.png", 
+					"c-logo.png", 
+					"eclipse-logo.png", 
+					"erlang-logo.png", 
+					"git-logo.png", 
+					"haskell-logo.png", 
+					"java-logo.png", 
+					"python-logo.png", 
+					"r-logo.png", 
+					"sublime-logo.png"
+			};
+			for(int j = 0; j < photos.length; j++) {
+				String location = Paths.get("./src/models/stock/" + photos[j]).toFile().getCanonicalPath();
+				String[] split = location.split("\\\\");
+				location = "file:" + File.separator + File.separator;
+				for(int i = 0; i < split.length; i++) {
+					location += File.separator;
+					location += split[i];
+				}
+				album.addPhoto(location);
+			}
+			user.addAlbum(album);
+			SerialUtils.writeUserToFile(user);
+			userList.add(user);
+		}
+		catch(IOException e) {
+			SerialUtils.errorAlert(e);
+		}
 	}
 }
