@@ -8,7 +8,14 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
 import javafx.scene.text.Text;
 import models.Album;
+import models.SerialUtils;
 
+/**
+ * This class handles interactions with individual album items.
+ * @author Evan Loriot
+ * @author Joseph Klaszky
+ *
+ */
 public class AlbumItemController {
 	@FXML
 	GridPane gridPane;
@@ -30,20 +37,30 @@ public class AlbumItemController {
 			});
 		}
 		catch(Exception e) {
-			System.out.println("error");
-			e.printStackTrace();
+			SerialUtils.errorAlert(e);
 		}
 	}
 
+	/**
+	 * Sets some attributes for a passed album.
+	 * @param album
+	 */
 	public void setAlbum(Album album) {
 		thumb.setImage(album.getThumb());
 		data.setText(album.toString());
 	}
 	
+	/**
+	 * Returns an album item's gridpane
+	 * @return gridPane for this album item
+	 */
 	public GridPane getItem() {
 		return gridPane;
 	}
 	
+	/**
+	 * Helper method
+	 */
 	public void deselect() {
 		gridPane.setStyle("-fx-background-color: white");
 	}

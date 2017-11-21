@@ -8,6 +8,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
+import models.SerialUtils;
 
 /**
  * The Photos class is the driver of our application.
@@ -37,8 +38,7 @@ public class Photos extends Application{
 			primaryStage.show();
 		}
 		catch(Exception e) {
-			System.out.println("error");
-			e.printStackTrace();
+			SerialUtils.errorAlert(e);
 		}
 		
 	}

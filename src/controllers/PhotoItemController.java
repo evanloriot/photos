@@ -9,7 +9,13 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
 import javafx.scene.text.Text;
 import models.Photo;
+import models.SerialUtils;
 
+/**
+ * This class handles interactions with individual photo item.
+ * @author Evan Loriot
+ * @author Joseph Klaszky
+ */
 public class PhotoItemController {
 	@FXML
 	GridPane gridPane;
@@ -18,6 +24,9 @@ public class PhotoItemController {
 	@FXML
 	Text caption;
 	
+	/**
+	 * Used to interact with an individual photo item.
+	 */
 	public PhotoItemController() {
 		FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/_photoListItem.fxml"));
 		loader.setController(this);
@@ -31,20 +40,30 @@ public class PhotoItemController {
 			});
 		}
 		catch(Exception e) {
-			System.out.println("error");
-			e.printStackTrace();
+			SerialUtils.errorAlert(e);
 		}
 	}
 	
+	/**
+	 * Helper method used to set some attributes of a photo.
+	 * @param photo
+	 */
 	public void setPhoto(Photo photo) {
 		this.photo.setImage(new Image(photo.location));
 		caption.setText(photo.caption);
 	}
 	
+	/**
+	 * Helper method that returns the gridpane for this particular photo item.
+	 * @return
+	 */
 	public GridPane getItem() {
 		return gridPane;
 	}
 	
+	/**
+	 * Helper method.
+	 */
 	public void deselect() {
 		gridPane.setStyle("-fx-background-color: white");
 	}

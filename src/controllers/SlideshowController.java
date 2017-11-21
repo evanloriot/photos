@@ -14,6 +14,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 import models.Album;
+import models.SerialUtils;
 import models.User;
 
 /**
@@ -46,7 +47,7 @@ public class SlideshowController {
 	Album album;
 	
 	/**
-	 * Curent position in the album.
+	 * Current position in the album.
 	 */
 	int curr;
 	
@@ -102,8 +103,7 @@ public class SlideshowController {
 					mainStage.setScene(scene);
 				}
 				catch(Exception e) {
-					System.out.println("error");
-					e.printStackTrace();
+					SerialUtils.errorAlert(e);
 				}
 			}
 		});
@@ -124,8 +124,7 @@ public class SlideshowController {
 					mainStage.setScene(scene);
 				}
 				catch(Exception e) {
-					System.out.println("error");
-					e.printStackTrace();
+					SerialUtils.errorAlert(e);
 				}
 			}
 		});

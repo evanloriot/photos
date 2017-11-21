@@ -10,6 +10,9 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
+
 /**
  * A class used to manage serializing/storing all of the users' data. 
  * @author Evan Loriot
@@ -106,8 +109,7 @@ public class SerialUtils implements Serializable{
 					users.add(user);
 					ois.close();
 				} catch(ClassNotFoundException e){
-					System.out.println("Error when reading the list of users from file.");
-					e.printStackTrace();
+					errorAlert(e);
 				}
 			} 
 		}
@@ -127,6 +129,14 @@ public class SerialUtils implements Serializable{
 			}
 		}
 		return null;
+	}
+	
+	public static void errorAlert(Exception e){
+		Alert alert = new Alert(AlertType.ERROR);
+	    alert.setTitle("Error");
+	    alert.setHeaderText(e.toString());
+	    alert.setContentText("There is likly an error with one of your serialized files");
+	    alert.showAndWait();
 	}
 	
 }

@@ -45,8 +45,7 @@ public class LoginController {
 		try {
 			userList = SerialUtils.getUserList();
 		} catch (IOException e) {
-			System.out.println("Error getting the list of users.");
-			e.printStackTrace();
+			SerialUtils.errorAlert(e);
 		}
 		login.setOnMouseClicked(new EventHandler<MouseEvent>() {
 			@Override
@@ -70,8 +69,7 @@ public class LoginController {
 						mainStage.setScene(scene);
 					}
 					catch(IOException e) {
-						System.out.println("Error logging the admin into the system.");
-						e.printStackTrace();
+						SerialUtils.errorAlert(e);
 					}
 				}
 				else if(userExists(username.getText())){
@@ -88,8 +86,7 @@ public class LoginController {
 						mainStage.setScene(scene);
 					}
 					catch(IOException e) {
-						System.out.println("Error checking to see if the user exsists in the system.");
-						e.printStackTrace();
+						SerialUtils.errorAlert(e);
 					}
 				}
 				else {
@@ -123,8 +120,7 @@ public class LoginController {
 						mainStage.setScene(scene);
 					}
 					catch(IOException e) {
-						System.out.println("Error logging the admin into the system.");
-						e.printStackTrace();
+						SerialUtils.errorAlert(e);
 					}
 				}
 				else if(userExists(username.getText())){
@@ -141,8 +137,7 @@ public class LoginController {
 						mainStage.setScene(scene);
 					}
 					catch(IOException e) {
-						System.out.println("Error checking to see if the user exsists in the system.");
-						e.printStackTrace();
+						SerialUtils.errorAlert(e);
 					}
 				}
 				else {

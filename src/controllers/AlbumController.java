@@ -136,9 +136,8 @@ public class AlbumController {
 							}
 						}
 					}
-					catch(Exception e) {
-						System.out.println("error");
-						e.printStackTrace();
+					catch(IOException e) {
+						SerialUtils.errorAlert(e);
 					}
 				}
 				else if(click.getClickCount() == 1){
@@ -170,9 +169,8 @@ public class AlbumController {
 					Scene scene = new Scene(root);
 					mainStage.setScene(scene);
 				}
-				catch(Exception e) {
-					System.out.println("error");
-					e.printStackTrace();
+				catch(IOException e) {
+					SerialUtils.errorAlert(e);
 				}
 			}
 		});
@@ -190,9 +188,8 @@ public class AlbumController {
 					Scene scene = new Scene(root);
 					mainStage.setScene(scene);
 				}
-				catch(Exception e) {
-					System.out.println("error");
-					e.printStackTrace();
+				catch(IOException e) {
+					SerialUtils.errorAlert(e);
 				}
 			}
 		});
@@ -213,9 +210,8 @@ public class AlbumController {
 					Scene scene = new Scene(root);
 					mainStage.setScene(scene);
 				}
-				catch(Exception e) {
-					System.out.println("error");
-					e.printStackTrace();
+				catch(IOException e) {
+					SerialUtils.errorAlert(e);
 				}
 			}
 		});
@@ -242,8 +238,7 @@ public class AlbumController {
 					addPhoto(location);
 				}
 				catch(Exception e) {
-					System.out.println("error");
-					e.printStackTrace();
+					SerialUtils.errorAlert(e);
 				}
 			}
 		});
@@ -271,8 +266,7 @@ public class AlbumController {
 					}
 				}
 				catch(Exception e) {
-					System.out.println("error");
-					e.printStackTrace();
+					SerialUtils.errorAlert(e);
 				}
 			}
 		});
@@ -335,8 +329,7 @@ public class AlbumController {
 					}
 				}
 				catch(Exception e) {
-					System.out.println("error");
-					e.printStackTrace();
+					SerialUtils.errorAlert(e);
 				}
 			}
 		});
@@ -401,23 +394,22 @@ public class AlbumController {
 								try {
 									SerialUtils.writeUserToFile(user);
 								}
-								catch(Exception e) {
-									e.printStackTrace();
+								catch(IOException e) {
+									SerialUtils.errorAlert(e);
 								}
 							}
 							try {
 								SerialUtils.writeUserToFile(user);
 							}
-							catch(Exception e) {
-								e.printStackTrace();
+							catch(IOException e) {
+								SerialUtils.errorAlert(e);
 							}
 							photosListView.refresh();
 						});
 					}
 				}
 				catch(Exception e) {
-					System.out.println("error");
-					e.printStackTrace();
+					SerialUtils.errorAlert(e);
 				}
 			}
 		});
@@ -442,8 +434,8 @@ public class AlbumController {
 			photos.get(photos.size() - 1).add(photo);
 			resizePhotos();
 			photosListView.refresh();
-		} catch(Exception e){
-			e.printStackTrace();
+		} catch(IOException e){
+			SerialUtils.errorAlert(e);
 		}
 	}
 	
@@ -461,8 +453,8 @@ public class AlbumController {
 						resizePhotos();
 						photosListView.refresh();
 						SerialUtils.writeUserToFile(user);
-					} catch(Exception e){
-						e.printStackTrace();
+					} catch(IOException e){
+						SerialUtils.errorAlert(e);
 					}
 						return;
 					}
