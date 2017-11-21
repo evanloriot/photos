@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
+
 <!-- Evan Loroit, Joseph Klaszky -->
+
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
@@ -74,7 +76,7 @@
       <Text fx:id="date" strokeType="OUTSIDE" strokeWidth="0.0" text="Date" GridPane.columnIndex="1" GridPane.rowIndex="3" />
       <Button fx:id="editCaption" mnemonicParsing="false" text="Edit" GridPane.columnIndex="2" GridPane.rowIndex="2">
          <font>
-            <Font size="18.0" />
+            <Font size="14.0" />
          </font>
       </Button>
       <GridPane GridPane.columnIndex="1" GridPane.rowIndex="4">

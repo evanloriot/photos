@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
+
 <!-- Evan Loroit, Joseph Klaszky -->
+
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
@@ -12,10 +14,10 @@
   </columnConstraints>
   <rowConstraints>
     <RowConstraints maxHeight="380.0" minHeight="10.0" prefHeight="170.0" vgrow="SOMETIMES" />
-    <RowConstraints maxHeight="220.0" minHeight="10.0" prefHeight="47.0" vgrow="SOMETIMES" />
+    <RowConstraints maxHeight="50.0" minHeight="10.0" prefHeight="50.0" vgrow="SOMETIMES" />
   </rowConstraints>
    <children>
       <ImageView fx:id="thumb" fitHeight="74.0" fitWidth="133.0" pickOnBounds="true" preserveRatio="true" GridPane.halignment="CENTER" GridPane.valignment="CENTER" />
-      <Text fx:id="data" strokeType="OUTSIDE" strokeWidth="0.0" text="Album Data" textAlignment="CENTER" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER" />
+      <Text fx:id="data" strokeType="OUTSIDE" strokeWidth="0.0" text="Album Data" textAlignment="CENTER" wrappingWidth="133.0" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER" />
    </children>
 </GridPane>

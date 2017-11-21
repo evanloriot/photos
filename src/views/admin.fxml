@@ -44,7 +44,7 @@
       </Button>
       <Button fx:id="add" mnemonicParsing="false" prefHeight="44.0" prefWidth="400.0" text="Add User" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.rowIndex="1" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS">
          <font>
-            <Font size="18.0" />
+            <Font size="14.0" />
          </font>
          <GridPane.margin>
             <Insets />
@@ -52,11 +52,8 @@
       </Button>
       <Button fx:id="delete" mnemonicParsing="false" prefHeight="44.0" prefWidth="400.0" text="Delete Selected User" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.rowIndex="1" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS">
          <font>
-            <Font size="18.0" />
+            <Font size="14.0" />
          </font>
-         <padding>
-            <Insets bottom="11.0" left="116.0" right="116.0" top="11.0" />
-         </padding>
       </Button>
       <ListView fx:id="users" prefHeight="200.0" prefWidth="200.0" GridPane.columnSpan="2" GridPane.rowIndex="2" />
    </children>
