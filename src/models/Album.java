@@ -80,7 +80,7 @@ public class Album implements Serializable{
 	}
 	
 	/**
-	 * @returns String -- Returns a string of the form: "Album name: (number of photos) earliest date - latest date. 
+	 * @return String -- Returns a string of the form: "Album name: (number of photos) earliest date - latest date. 
 	 */
 	public String toString() {
 		return name + ": (" + numPhotos + ")\n" + earliestDate() + "-" + latestDate();
@@ -100,6 +100,7 @@ public class Album implements Serializable{
 	/**
 	 * Adds a new photo to the album and increments the number of photos.
 	 * @param location The location of the photo being added to the album.
+	 * @return Photo -- instance of photo object added to album
 	 */
 	public Photo addPhoto(String location) {
 		int instance = 1;
@@ -131,6 +132,7 @@ public class Album implements Serializable{
 	/**
 	 * Iterates over the album to find a particular photo.
 	 * @param location The location of the photo the method is looking for.
+	 * @param instance the instance number of a photo in album (if duplicate != 1 else 1)
 	 * @return Photo -- If found returns the photo object from the album.
 	 */
 	public Photo getPhoto(String location, int instance) {

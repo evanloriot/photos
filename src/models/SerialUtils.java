@@ -39,6 +39,7 @@ public class SerialUtils implements Serializable{
 	 * Checks to see if the a user name is already taken when the admin is trying to add new users.
 	 * @param userList The list of all known users.
 	 * @param newUser The name of the user that is trying to be added.
+	 * @return boolean -- true if username already exists false otherwise
 	 */
 	public static boolean nameTaken(List<User> userList, String newUser){
 		for(User u : userList){
@@ -92,9 +93,9 @@ public class SerialUtils implements Serializable{
 	/**
 	 * Iterates through the all the files that contains the user objects, collects them,
 	 * and returns a list of them.
-	 * @exception IOException -- If it can't open a file
+	 * @return ArrayList -- De-serializes and returns all users found in models.dat
+	 * @throws IOException exception thrown when user list not created properly
 	 * @see IOException
-	 * @return ArrayList<User> -- De-serializes and returns all users found in models.dat
 	 */
 	public static ArrayList<User> getUserList() throws IOException{
 		File dir = new File(storeDir);

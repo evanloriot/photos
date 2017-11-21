@@ -45,9 +45,8 @@ public class AdminController {
 	
 	/**
 	 * Called whenever the user enters the admin view.
-	 * @param mainStage
+	 * @param mainStage current application stage
 	 * @param userList Passed from the calling view -- list of all the currently saved users.
-	 * @exception IOException -- Can be raised any time there is an issue with the users' files.
 	 * @see IOException
 	 */
 	public void start(Stage mainStage, ArrayList<User> userList) {
@@ -138,8 +137,6 @@ public class AdminController {
 	 * Deletes a user from the system.
 	 * @param userName Name of the user to be deleted.
 	 * @param userList List of all the currently saved users.
-	 * @exception IOException -- Can be raised any time there is an issue with the users' files.
-	 * @see IOException
 	 */
 	public void deleteUser(String userName, ArrayList<User> userList) {
 		for(Iterator<User> iterator = obsList.iterator() ; iterator.hasNext() ; ){
@@ -156,8 +153,6 @@ public class AdminController {
 	 * Adds a new user to the system.
 	 * @param userName Name of the user to be added.
 	 * @param userList List of all of the current users.
-	 * @exception IOException -- Can be raised any time there is an issue with the users' files.
-	 * @see IOException
 	 */
 	public void addUser(String userName, ArrayList<User> userList) {
 		User u = new User(userName);

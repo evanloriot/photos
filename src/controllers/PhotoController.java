@@ -107,9 +107,7 @@ public class PhotoController {
 	
 	/**
 	 * Called when the a user enters the Photo view. Handles interactions with the user when editing a photo.
-	 * @param mainStage
-	 * @exception IOException -- Can be raised any time there is an issue with the users' files.
-	 * @see IOException
+	 * @param mainStage current application stage
 	 */
 	public void start(Stage mainStage) {
 		obsTags = FXCollections.observableArrayList(photoObj.tags);
@@ -312,7 +310,7 @@ public class PhotoController {
 	/**
 	 * Check to make sure the tag is of the format 'string=string'
 	 * @param tag Takes in a string that will be used as a tag
-	 * @return boolean -- True if the tage is formatted properly, false otherwise
+	 * @return boolean -- True if the tag is formatted properly, false otherwise
 	 */
 	public boolean isTagFormatted(String tag) {
 		return tag.matches("[a-zA-Z0-9]*[=][a-zA-Z0-9]*");

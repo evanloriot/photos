@@ -77,9 +77,7 @@ public class SearchByDateController {
 	
 	/**
 	 * Called when the user enters the searchByDate view.
-	 * @param mainStag
-	 * @exception IOException -- Can be raised any time there is an issue with the users' files.
-	 * @see IOException
+	 * @param mainStage current application stage
 	 */
 	public void start(Stage mainStage) {
 		if(searchStartDate != null && searchEndDate != null) {

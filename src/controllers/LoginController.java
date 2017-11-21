@@ -37,9 +37,7 @@ public class LoginController {
 	
 	/**
 	 * Called when the a user enters the Login view. Handles interactions with the user.
-	 * @param mainStage
-	 * @exception IOException -- Can be raised any time there is an issue with the users' files.
-	 * @see IOException
+	 * @param mainStage current application stage
 	 */
 	public void start(Stage mainStage) {
 		try {

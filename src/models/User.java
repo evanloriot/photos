@@ -77,6 +77,7 @@ public class User implements Serializable{
 	/**
 	 * Gets a specific album associated with the user.
 	 * @param name The name of the requested album. 
+	 * @return Album -- instance of album with given name
 	 */
 	public Album getAlbum(String name) {
 		for(int i = 0; i < albums.size(); i++) {

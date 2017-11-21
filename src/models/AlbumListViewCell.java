@@ -14,8 +14,7 @@ import javafx.scene.layout.GridPane;
 /**
  * This class handles each cell in an a list of albums 
  * @author Evan Loriot
- * @autho Joseph Klaszky
- * @param <T> 
+ * @author Joseph Klaszky
  */
 public class AlbumListViewCell<T extends ArrayList<Album>> extends ListCell<T> {
 	
@@ -56,9 +55,9 @@ public class AlbumListViewCell<T extends ArrayList<Album>> extends ListCell<T> {
 	
 	/**
 	 * Method that handles the user selecting a specific album cell.
-	 * @param row
-	 * @param col
-	 * @param grid
+	 * @param row row of grid
+	 * @param col column of grid
+	 * @param grid grid of nodes
 	 */
 	public void select(int row, int col, GridPane grid) {
 		ObservableList<Node> childrens = grid.getChildren();
@@ -74,8 +73,8 @@ public class AlbumListViewCell<T extends ArrayList<Album>> extends ListCell<T> {
 	}
 	
 	/**
-	 * Helper method
-	 * @param grid
+	 * Helper method to deselect any selected album cell
+	 * @param grid grid of nodes
 	 */
 	public void deselect(GridPane grid) {
 		ObservableList<Node> childrens = grid.getChildren();

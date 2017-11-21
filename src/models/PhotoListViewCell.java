@@ -16,7 +16,6 @@ import javafx.scene.layout.GridPane;
  * the album view.
  * @author Evan Loriot
  * @author Joseph Klaszky
- * @param <T>
  */
 public class PhotoListViewCell <T extends ArrayList<Photo>> extends ListCell<T> {
 	@Override
@@ -53,9 +52,9 @@ public class PhotoListViewCell <T extends ArrayList<Photo>> extends ListCell<T> 
 	
 	/**
 	 * Method that handles the user selecting a specific photo cell.
-	 * @param row
-	 * @param col
-	 * @param grid
+	 * @param row row of grid
+	 * @param col column of grid
+	 * @param grid grid of nodes
 	 */
 	public void select(int row, int col, GridPane grid) {
 		ObservableList<Node> childrens = grid.getChildren();
@@ -71,8 +70,8 @@ public class PhotoListViewCell <T extends ArrayList<Photo>> extends ListCell<T> 
 	}
 	
 	/**
-	 * Helper method
-	 * @param grid
+	 * Helper method to deselect any selected photo cells
+	 * @param grid grid of nodes
 	 */
 	public void deselect(GridPane grid) {
 		ObservableList<Node> childrens = grid.getChildren();

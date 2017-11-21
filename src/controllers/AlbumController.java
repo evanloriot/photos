@@ -82,9 +82,7 @@ public class AlbumController {
 	/**
 	 * Called when the user enters the album view. Handles all user interactions when adding items to/editing items in
 	 * an album.
-	 * @param mainStage
-	 * @exception IOException -- Can be raised any time there is an issue with the users' files.
-	 * @see IOException
+	 * @param mainStage current application stage
 	 */
 	public void start(Stage mainStage) {
 		title.setText(title.getText() + " " + album.name + " - " + user.username);
@@ -456,8 +454,8 @@ public class AlbumController {
 					} catch(IOException e){
 						SerialUtils.errorAlert(e);
 					}
-						return;
-					}
+					return;
+				}
 			}
 		}
 	}
@@ -482,7 +480,7 @@ public class AlbumController {
 	}
 
 	/**
-	 * Resizes a list of photo objects
+	 * Resizes a list of photo objects to be displayed
 	 */
 	public void resizePhotos() {
 		for(int i = 0; i < photos.size(); i++) {

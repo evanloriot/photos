@@ -20,11 +20,11 @@ import javafx.scene.layout.GridPane;
 public class Utilities {
 	/**
 	 * Creates a new dialog to be displayed to the user.
-	 * @param confirmText
-	 * @param title
-	 * @param header
-	 * @param promptText
-	 * @param labelText
+	 * @param confirmText Text for OK type button
+	 * @param title title of window
+	 * @param header header text with system dialog
+	 * @param promptText text for user prompt
+	 * @param labelText label text for user input field
 	 * @return Optionally returns a string
 	 */
 	public static Optional<String> showDialog(String confirmText, String title, String header, String promptText, String labelText){

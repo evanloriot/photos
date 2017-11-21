@@ -18,8 +18,6 @@ import models.SerialUtils;
 public class Photos extends Application{
 	/**
 	 * Starts the app and loads the first login view.
-	 * @exception IOException -- Can be raised any time there is an issue with the users' files.
-	 * @see IOException
 	 */
 	public void start(Stage primaryStage) {
 		try {

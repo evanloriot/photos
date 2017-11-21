@@ -67,9 +67,7 @@ public class AlbumsController {
 	
 	/**
 	 * Called when the user enters the albums view. Handles all user interactions when adding/editing albums.
-	 * @param mainStage
-	 * @exception IOException -- Can be raised any time there is an issue with the users' files.
-	 * @see IOException
+	 * @param mainStage current application stage
 	 */
 	public void start(Stage mainStage) {
 		title.setText(title.getText() + user.username);
@@ -292,8 +290,6 @@ public class AlbumsController {
 	/**
 	 * Attempts to add a new album.
 	 * @param name Name of the album to be added.
-	 * @exception IOException -- Can be raised any time there is an issue with the users' files.
-	 * @see IOException
 	 */
 	public void addAlbum(String name) {
 		try{
@@ -316,8 +312,6 @@ public class AlbumsController {
 	 * Renames a user selected album.
 	 * @param name Name of the current album.
 	 * @param newName New name for the current album.
- 	 * @exception IOException -- Can be raised any time there is an issue with the users' files.
-	 * @see IOException
 	 */
 	public void renameAlbum(String name, String newName) {
 		try {
@@ -378,7 +372,7 @@ public class AlbumsController {
 	}
 	
 	/**
-	 * Changes the size of the album when new items are added or deleted.
+	 * Changes the size of the displayed albums when new items are added or deleted.
 	 */
 	public void resizeAlbums() {
 		for(int i = 0; i < albums.size(); i++) {

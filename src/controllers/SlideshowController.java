@@ -53,9 +53,7 @@ public class SlideshowController {
 	
 	/**
 	 * Called whenever the user enters the slideShow view.
-	 * @param mainStage
-	 * @exception IOException -- Can be raised any time there is an issue with the users' files.
-	 * @see IOException
+	 * @param mainStage current application stage
 	 */
 	public void start(Stage mainStage) {
 		title.setText(title.getText() + " " + album.name + ": " + user.username);

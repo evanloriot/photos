@@ -70,9 +70,7 @@ public class SearchByTagController {
 	
 	/**
 	 * Called when the user enters the searchByTag view.
-	 * @param mainStage
-	 * @exception IOException -- Can be raised any time there is an issue with the users' files.
-	 * @see IOException
+	 * @param mainStage current application stage
 	 */
 	public void start(Stage mainStage) {
 		search.setDisable(true);

@@ -46,7 +46,7 @@ public class PhotoItemController {
 	
 	/**
 	 * Helper method used to set some attributes of a photo.
-	 * @param photo
+	 * @param photo photo to set instance to
 	 */
 	public void setPhoto(Photo photo) {
 		this.photo.setImage(new Image(photo.location));
@@ -55,14 +55,14 @@ public class PhotoItemController {
 	
 	/**
 	 * Helper method that returns the gridpane for this particular photo item.
-	 * @return
+	 * @return GridPane -- Gird that contains the photo cell with image and caption/date.
 	 */
 	public GridPane getItem() {
 		return gridPane;
 	}
 	
 	/**
-	 * Helper method.
+	 * Helper method to deselect highlighted photo object
 	 */
 	public void deselect() {
 		gridPane.setStyle("-fx-background-color: white");

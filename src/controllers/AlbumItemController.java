@@ -43,7 +43,7 @@ public class AlbumItemController {
 
 	/**
 	 * Sets some attributes for a passed album.
-	 * @param album
+	 * @param album album to set instance to
 	 */
 	public void setAlbum(Album album) {
 		thumb.setImage(album.getThumb());
@@ -59,7 +59,7 @@ public class AlbumItemController {
 	}
 	
 	/**
-	 * Helper method
+	 * Helper method to deselect an album item
 	 */
 	public void deselect() {
 		gridPane.setStyle("-fx-background-color: white");
