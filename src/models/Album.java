@@ -118,10 +118,11 @@ public class Album implements Serializable{
 	/**
 	 * Removes a photo from the album and decrements the number of photos.
 	 * @param location The location of the photo being removed from the album. 
+	 * @param instance the instance number of the photo in album if duplicate.
 	 */
-	public void deletePhoto(String location) {
+	public void deletePhoto(String location, int instance) {
 		for(int i = 0; i < photos.size(); i++) {
-			if(location.equals(photos.get(i).location)) {
+			if(location.equals(photos.get(i).location) && instance == photos.get(i).instance) {
 				photos.remove(i);
 				numPhotos--;
 				return;

@@ -286,7 +286,7 @@ public class AlbumController {
 						alert.setHeaderText("Are you sure you want to delete this photo?");
 						Optional<ButtonType> result = alert.showAndWait();
 						if(result.get() == ButtonType.OK) {
-							deletePhoto(photo.location);
+							deletePhoto(photo.location, photo.instance);
 						}
 					}
 				}
@@ -349,7 +349,7 @@ public class AlbumController {
 						
 						result.ifPresent(albumName -> {
 							user.getAlbum(albumName).addPhoto(photo.location);
-							deletePhoto(photo.location);
+							deletePhoto(photo.location, photo.instance);
 						});
 					}
 				}
@@ -467,12 +467,13 @@ public class AlbumController {
 	/**
 	 * Deletes a photo from the album the user is currently in.
 	 * @param location Location of the photo that is being deleted.
+	 * @param instance the instance number of photo if duplicate
 	 */
-	public void deletePhoto(String location) {
-		album.deletePhoto(location);
+	public void deletePhoto(String location, int instance) {
+		album.deletePhoto(location, instance);
 		for(int i = 0; i < photos.size(); i++) {
 			for(int j = 0; j < photos.get(i).size(); j++) {
-				if(location.equals(photos.get(i).get(j).location)) {
+				if(location.equals(photos.get(i).get(j).location) && instance == photos.get(i).get(j).instance) {
 					try{				
 						photos.get(i).remove(j);
 						resizePhotos();
